@@ -1,5 +1,4 @@
-import * as Tone from "tone";
-import { lessPlayer, morePlayer, showScoreBoard } from "./modules/home.ts";
+import { lessPlayer, morePlayer } from "./modules/home.ts";
 
 // # HOME
 
