@@ -16,7 +16,7 @@ export default class GameManager {
 
   round: number;
   activePlayers: Player[] | undefined;
-  whoIsPlaying: number | undefined;
+  whoIsPlaying: number;
   pattern: string[];
 
   colorPossibilities: { [key: string]: string } = {
@@ -38,7 +38,7 @@ export default class GameManager {
 
     this.activePlayers;
     this.round = 1;
-    this.whoIsPlaying;
+    this.whoIsPlaying = 0;
     this.pattern = [];
     this.players = this.setPlayers(playersName);
 
@@ -59,8 +59,6 @@ export default class GameManager {
     this.generateHTML();
     // this.countdown();
     this.createPattern(5);
-    console.log(this.pattern);
-    this.playPattern();
   }
 
   generateHTML(): void {
@@ -142,11 +140,11 @@ export default class GameManager {
       .map(() => colors[Math.floor(Math.random() * colors.length)]);
 
     this.pattern = [...this.pattern, ...patternTab];
+    this.playPattern();
   }
 
   playPattern() {
     const synth = new Tone.Synth().toDestination();
-    const now = Tone.now();
 
     let index: number = 0;
     const playingNotes = setInterval(() => {
@@ -165,19 +163,51 @@ export default class GameManager {
         });
       }, 300);
       index++;
-      if (index >= this.pattern.length) {
+      if (index >= this.pattern.length + 1) {
         clearInterval(playingNotes);
+        this.setWhoIsPlayings();
       }
-      console.log("oui");
     }, 500);
+  }
+
+  playerIsPlaying() {
+    const buttonsCtr = document.querySelector(
+      `.player-${
+        playerClasses[this.whoIsPlaying + 1]
+      } > section.game-board > div.game-buttons`
+    );
+    const buttonsOfThePlayerThatPlay = document.querySelectorAll(
+      `.player-${
+        playerClasses[this.whoIsPlaying + 1]
+      } > section.game-board > div.game-buttons > button`
+    );
+    buttonsCtr?.classList.add("zindexTop");
+    buttonsOfThePlayerThatPlay.forEach((button) => {
+      button.addEventListener("click", () => {
+        // this.playRound(button);
+        console.log(button);
+      });
+    });
+
+    // this.roundTransition();
+  }
+
+  roundTransition() {
+    setTimeout(() => {
+      this.createPattern(1);
+    }, 2000);
   }
 
   setGameSpeed(speed: number): number {
     return (this.gameSpeed = speed);
   }
 
-  setWhoIsPlayings(index: number): number {
-    return (this.whoIsPlaying = index);
+  setWhoIsPlayings() {
+    const index = Math.floor(Math.random() * this.players.length);
+    console.log(index);
+
+    this.whoIsPlaying = index;
+    this.playerIsPlaying();
   }
 
   setActivePlayers(players: Player[]): Player[] {
