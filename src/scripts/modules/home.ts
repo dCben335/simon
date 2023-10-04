@@ -84,7 +84,7 @@ function morePlayer() {
   }
 }
 
-function showScoreBoard() {
+(function showScoreBoard() {
 
   const scoreboard : PlayerBoardScore[] = JSON.parse(localStorage.getItem("scoreboard") || "");
 
@@ -95,7 +95,7 @@ function showScoreBoard() {
       scoreBoardCtr.innerHTML += templateScore({rank, gamertag, score});
     }
   }
-}
+})()
 
 
 localStorage.setItem("scoreboard", JSON.stringify([
@@ -134,5 +134,4 @@ localStorage.setItem("scoreboard", JSON.stringify([
 export { 
   lessPlayer,
   morePlayer,
-  showScoreBoard
 };

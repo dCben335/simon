@@ -1,11 +1,4 @@
-type gameConstructor = {
-  nbPlayers: number;
-  players: string[];
-  round: number;
-  activePlayers: string[];
-  whoIsPlaying: string;
-  gameSpeed: number;
-};
+import { gameConstructor } from "./types";
 
 export default class GameManager {
   nbPlayers: number;
