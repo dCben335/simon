@@ -26,14 +26,9 @@ export default class GameManager {
     blue: "Bb4",
   };
 
-  constructor({
-    nbPlayers,
-    playersName,
-    gameSpeed,
-    gameContainer,
-  }: GameConstructor) {
+  constructor({ nbPlayers, playersName, gameSpeed, gameContainer }: GameConstructor) {
     this.nbPlayers = nbPlayers;
-    this.gameSpeed = gameSpeed || 1;
+    this.gameSpeed = gameSpeed || 700;
     this.gameContainer = gameContainer;
 
     this.activePlayers;
@@ -45,22 +40,24 @@ export default class GameManager {
     this.startGame();
   }
 
-  setPlayers(playersName: string[]): Player[] {
-    return playersName.map((playerName) => {
-      return {
-        name: playerName,
-        score: 0,
-        round: this.round || 1,
-      };
-    });
-  }
   startGame() {
     this.setActivePlayers(this.players);
     this.generateHTML();
-    // this.countdown();
     this.createPattern(5);
-    console.log(this.pattern);
-    this.playPattern();
+  }
+  
+
+
+  creationTransition() {
+    this.countdown()
+  }
+
+  setWhoIsPlayings(): number {
+    if (!this.activePlayers) return this.whoIsPlaying = 0
+
+    const index = Math.floor(Math.random() * this.activePlayers.length);
+
+    return (this.whoIsPlaying = index);
   }
 
   generateHTML(): void {
@@ -112,36 +109,34 @@ export default class GameManager {
     });
   }
 
-  // countdown() {
-  //   let counter: number = 3;
+  countdown() {
+    let counter: number = 3;
+    const indications = this.gameContainer.querySelector('.game-indications h2') as HTMLHeadingElement
 
-  //   const countdownInterval = setInterval(() => {
+    const countdownInterval = setInterval(() => {
+      indications.textContent = counter > 0 ? `${counter}` : "C'est parti !"
+        
+      if ( counter === -2 ) {
+        indications.textContent = "";
+        this.clearCountdown(countdownInterval);
+        this.
+      }
 
-  //     this.indicationsContainer.innerHTML =
-  //       counter > 0 ? `<h2>${counter}</h2>` : "C'est parti !"
-
-  //     if ( counter === -2 ) {
-  //       this.indicationsContainer.innerHTML = "";
-  //       this.clearCountdown(countdownInterval);
-  //     }
-
-  //     counter--;
-  //   }, 1000);
-  // }
-
-  clearCountdown(
-    interval: ReturnType<typeof setInterval>
-  ): ReturnType<typeof clearInterval> {
-    return clearInterval(interval);
+      counter--;
+    }, 1000);
   }
 
-  createPattern(nbColorCreated: number) {
-    const colors = Object.keys(this.colorPossibilities) as Array<string>;
+
+  createPattern(nbColorCreated: number): void {
+    const colors: string[] = Object.keys(this.colorPossibilities);
+
     const patternTab: Array<string> = Array(nbColorCreated)
       .fill("")
       .map(() => colors[Math.floor(Math.random() * colors.length)]);
 
     this.pattern = [...this.pattern, ...patternTab];
+
+    this.playPattern();
   }
 
   playPattern() {
@@ -149,35 +144,48 @@ export default class GameManager {
     const now = Tone.now();
 
     let index: number = 0;
+
     const playingNotes = setInterval(() => {
+
       const buttonColor = document.querySelectorAll(
         `[data-color="${this.pattern[index]}"]`
       );
-      buttonColor.forEach((button) => {
-        button?.classList.add("activeColor");
-      });
+
+      buttonColor.forEach((button) => button?.classList.add("activeColor"));
 
       const note: string = this.colorPossibilities[this.pattern[index]];
       synth.triggerAttackRelease(note, "4n");
+
       setTimeout(() => {
-        buttonColor.forEach((button) => {
-          button?.classList.remove("activeColor");
-        });
-      }, 300);
+        buttonColor.forEach((button) => button?.classList.remove("activeColor"))
+      },  this.gameSpeed / 1.75);
+
       index++;
-      if (index >= this.pattern.length) {
+      
+      if (index >= this.pattern.length + 1) {
         clearInterval(playingNotes);
+        this.setWhoIsPlayings();
       }
-      console.log("oui");
-    }, 500);
+
+    }, this.gameSpeed);
+  }
+
+  clearCountdown( interval: ReturnType<typeof setInterval>): ReturnType<typeof clearInterval> {
+    return clearInterval(interval);
+  }
+
+  setPlayers(playersName: string[]): Player[] {
+    return playersName.map((playerName) => {
+      return {
+        name: playerName,
+        score: 0,
+        round: this.round || 1,
+      };
+    });
   }
 
   setGameSpeed(speed: number): number {
     return (this.gameSpeed = speed);
-  }
-
-  setWhoIsPlayings(index: number): number {
-    return (this.whoIsPlaying = index);
   }
 
   setActivePlayers(players: Player[]): Player[] {

@@ -7,7 +7,7 @@ type PlayerBoardScore = {
 type GameConstructor = {
   nbPlayers: number;
   playersName: string[];
-  gameSpeed: number;
+  gameSpeed?: number;
   gameContainer: HTMLDivElement;
 };
 

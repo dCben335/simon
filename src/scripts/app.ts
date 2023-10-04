@@ -27,7 +27,6 @@ form?.addEventListener("submit", (event) => {
     const gameOptions: GameConstructor = {
       nbPlayers: players.length,
       playersName: players,
-      gameSpeed: 1,
       gameContainer: gameContainer,
     };
 
