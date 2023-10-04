@@ -1,22 +1,24 @@
-const nbPlayer = document.querySelector(".nbPlayerText");
-const allInputCtrl = document.querySelector(".allPlayerInput");
-const scoreBoardCtr = document.querySelector(".scoreboard>section");
+import { PlayerBoardScore } from "./types";
 
-const templateInput = (id) => `
-<fieldset id="player${id}">
-    <label for="gamertag${id}" >Nom du joueur ${id}</label>
-    <input
-    type="text"
-    name="gamertag${id}"
-    id="gamertag${id}"
-    required
-    placeholder="Entrez votre pseudo"
-    maxlength="15"
-    />
-</fieldset>
+const nbPlayer = document.querySelector(".nbPlayerText") as HTMLInputElement | null;;
+const allInputCtrl = document.querySelector(".allPlayerInput") as HTMLDivElement | null;
+const scoreBoardCtr = document.querySelector(".scoreboard > section") as HTMLDivElement;
+
+const templateInput = (id : number) : string => `
+  <fieldset id="player${id}">
+      <label for="gamertag${id}" >Nom du joueur ${id}</label>
+      <input
+        type="text"
+        name="gamertag${id}"
+        id="gamertag${id}"
+        required
+        placeholder="Entrez votre pseudo"
+        maxlength="15"
+      />
+  </fieldset>
 `;
 
-const templateScore = (rank, gamertag, score) => `
+const templateScore = ({rank, gamertag, score} : PlayerBoardScore) : string => `
   <div class="scoreboardRow" >
       <span class="rank">#${rank}</span>
       <span class="gamertag">${gamertag}</span>
@@ -24,12 +26,12 @@ const templateScore = (rank, gamertag, score) => `
   </div>
 `;
 
-const templateScoreHead = `
-<div class="scoreboardHead">
-  <span>RANK</span>
-  <span>GAMERTAG</span>
-  <span>BEST SCORE</span>
-</div>
+const templateScoreHead : string = `
+  <div class="scoreboardHead">
+    <span>RANK</span>
+    <span>GAMERTAG</span>
+    <span>BEST SCORE</span>
+  </div>
 `;
 
 // Création du keyframe
@@ -38,7 +40,10 @@ const keyframes = [
     opacity: 0,
     transform: "translateY(50px)",
   },
-  { opacity: 1, transform: "translateY(0)" },
+  { 
+    opacity: 1,
+    transform: "translateY(0)" 
+  },
 ];
 
 // Configuration de l'animation
@@ -47,40 +52,47 @@ const options = {
   iterations: 1,
 };
 
-function setPlayer(add) {
+function setPlayer(add : boolean) {
+  if (!allInputCtrl || !nbPlayer) return
   if (add) {
-    allInputCtrl.innerHTML += templateInput(nbPlayer?.value);
-    const fieldset = document.querySelector(`#player${nbPlayer?.value}`);
+    
+    allInputCtrl.innerHTML += templateInput(nbPlayer.valueAsNumber);
+    const fieldset = allInputCtrl.querySelector(`#player${nbPlayer?.valueAsNumber}`) as HTMLInputElement;
+
     // Lancement de l'animation
     fieldset.animate(keyframes, options);
   } else {
+
     allInputCtrl.innerHTML = "";
-    for (let i = 1; i <= nbPlayer.value; i++) {
+    for (let i = 1; i <= nbPlayer.valueAsNumber; i++) {
       allInputCtrl.innerHTML += templateInput(i);
     }
   }
 }
 
 function lessPlayer() {
-  if (nbPlayer.value > 1) {
-    nbPlayer.value--;
+  if (nbPlayer?.valueAsNumber && nbPlayer?.valueAsNumber  > 1) {
+    nbPlayer.valueAsNumber--;
     setPlayer(false);
   }
 }
 
 function morePlayer() {
-  if (nbPlayer.value < 4) {
-    nbPlayer.value++;
+  if (nbPlayer?.valueAsNumber && nbPlayer?.valueAsNumber < 4) {
+    nbPlayer.valueAsNumber++;
     setPlayer(true);
   }
 }
 
 function showScoreBoard() {
-  const scoreboard = JSON.parse(localStorage.getItem("scoreboard"));
+
+  const scoreboard : PlayerBoardScore[] = JSON.parse(localStorage.getItem("scoreboard") || "");
+
   if (scoreboard.length > 0) {
     scoreBoardCtr.innerHTML = templateScoreHead;
+
     for (const { rank, gamertag, score } of scoreboard) {
-      scoreBoardCtr.innerHTML += templateScore(rank, gamertag, score);
+      scoreBoardCtr.innerHTML += templateScore({rank, gamertag, score});
     }
   }
 }
@@ -119,4 +131,8 @@ localStorage.setItem("scoreboard", JSON.stringify([
   }
 ]))
 
-export { lessPlayer, morePlayer, showScoreBoard };
+export { 
+  lessPlayer,
+  morePlayer,
+  showScoreBoard
+};
