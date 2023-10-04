@@ -6,9 +6,15 @@ type PlayerBoardScore = {
 
 type GameConstructor = {
   nbPlayers: number;
-  players: string[];
+  playersName: string[];
   gameSpeed: number;
   gameContainer: HTMLDivElement;
 };
 
-export type { PlayerBoardScore, GameConstructor };
+type Player = {
+  name: string;
+  score: number;
+  round: number;
+};
+
+export type { PlayerBoardScore, GameConstructor, Player };

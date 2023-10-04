@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { GameConstructor } from "./types";
+import { GameConstructor, Player } from "./types";
 
 const playerClasses: { [key: number]: string } = {
   1: "one",
@@ -10,12 +10,12 @@ const playerClasses: { [key: number]: string } = {
 
 export default class GameManager {
   nbPlayers: number;
-  players: string[];
+  players: Player[];
   gameSpeed: number;
   gameContainer: HTMLDivElement;
 
   round: number;
-  activePlayers: string[] | undefined;
+  activePlayers: Player[] | undefined;
   whoIsPlaying: number | undefined;
   pattern: string[];
 
@@ -28,65 +28,83 @@ export default class GameManager {
 
   constructor({
     nbPlayers,
-    players,
+    playersName,
     gameSpeed,
     gameContainer,
   }: GameConstructor) {
     this.nbPlayers = nbPlayers;
-    this.players = players;
     this.gameSpeed = gameSpeed || 1;
     this.gameContainer = gameContainer;
 
     this.activePlayers;
+    this.round = 1;
     this.whoIsPlaying;
-    this.round = 4;
     this.pattern = [];
+    this.players = this.setPlayers(playersName);
 
     this.startGame();
   }
 
+  setPlayers(playersName: string[]): Player[] {
+    return playersName.map((playerName) => {
+      return {
+        name: playerName,
+        score: 0,
+        round: this.round || 1,
+      };
+    });
+  }
   startGame() {
     this.setActivePlayers(this.players);
     this.generateHTML();
-
     // this.countdown();
     this.createPattern(5);
     console.log(this.pattern);
     this.playPattern();
   }
 
-  generateHTML() {
+  generateHTML(): void {
     this.gameContainer.classList.add(`${playerClasses[this.players.length]}`);
 
-    this.players.forEach((element: string, index: number) => {
-      this.gameContainer.innerHTML += `
-          <div class="game ${index}">
-            <section class="game-infos">
-                <h2>GAME OVER</h2>
-                <div>
-                    <article>
-                        <h3>SCORE</h3>
-                        <span class="score">1787</span>
-                    </article>
-                    <article>
-                        <h3>ROUND</h3>
-                        <span class="round">10</span>
-                    </article>
-                </div>
-            </section>
-            <section class="game-board">
-                <div class="game-indications">
-                    <div>
+    const playerInfos: string = `
+        <div class="game-infos">
+            <h2>GAME OVER</h2>
+            <div>
+                <article>
+                    <h3>SCORE</h3>
+                    <span class="score">1787</span>
+                </article>
+                <article>
+                    <h3>ROUND</h3>
+                    <span class="round">10</span>
+                </article>
+            </div>
+        </div>
+    `;
 
-                    </div>
+    this.players.forEach((element: Player, index: number) => {
+      this.gameContainer.innerHTML += `
+          <div class="game player-${playerClasses[index + 1]}">
+            ${this.players.length === 1 ? playerInfos : ""}
+            <section class="game-board">
+                <div class="game-circle">
+                  ${
+                    this.players.length === 1
+                      ? `
+                      <div class="game-indications">
+                        <h2></h2>
+                      </div>
+                      `
+                      : playerInfos
+                  }
                 </div>
                 <div class="game-buttons">
-                ${Object.keys(this.colorPossibilities)
-                  .map(
-                    (color) =>
-                      `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
-                  )
-                  .join("")}
+                    ${Object.keys(this.colorPossibilities)
+                      .map(
+                        (color) =>
+                          `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
+                      )
+                      .join("")}
                 </div>
             </section>       
           </div> 
@@ -94,24 +112,26 @@ export default class GameManager {
     });
   }
 
-  countdown() {
-    let counter: number = 3;
+  // countdown() {
+  //   let counter: number = 3;
 
-    const countdownInterval = setInterval(() => {
-      this.gameContainer.innerHTML =
-        counter > 0 ? `<h2>${counter}</h2>` : "C'est parti !";
+  //   const countdownInterval = setInterval(() => {
 
-      if (counter === -2) {
-        this.gameContainer.innerHTML = "";
-        this.clearCountdown(countdownInterval);
-      }
-      this.colorPossibilities["red"];
+  //     this.indicationsContainer.innerHTML =
+  //       counter > 0 ? `<h2>${counter}</h2>` : "C'est parti !"
 
-      counter--;
-    }, 1000);
-  }
+  //     if ( counter === -2 ) {
+  //       this.indicationsContainer.innerHTML = "";
+  //       this.clearCountdown(countdownInterval);
+  //     }
 
-  clearCountdown(interval: ReturnType<typeof setInterval>) {
+  //     counter--;
+  //   }, 1000);
+  // }
+
+  clearCountdown(
+    interval: ReturnType<typeof setInterval>
+  ): ReturnType<typeof clearInterval> {
     return clearInterval(interval);
   }
 
@@ -130,14 +150,19 @@ export default class GameManager {
 
     let index: number = 0;
     const playingNotes = setInterval(() => {
-      const buttonColor = document.querySelector(
+      const buttonColor = document.querySelectorAll(
         `[data-color="${this.pattern[index]}"]`
       );
-      buttonColor?.classList.add("activeColor");
+      buttonColor.forEach((button) => {
+        button?.classList.add("activeColor");
+      });
+
       const note: string = this.colorPossibilities[this.pattern[index]];
       synth.triggerAttackRelease(note, "4n");
       setTimeout(() => {
-        buttonColor?.classList.remove("activeColor");
+        buttonColor.forEach((button) => {
+          button?.classList.remove("activeColor");
+        });
       }, 300);
       index++;
       if (index >= this.pattern.length) {
@@ -147,19 +172,19 @@ export default class GameManager {
     }, 500);
   }
 
-  setGameSpeed(speed: number) {
+  setGameSpeed(speed: number): number {
     return (this.gameSpeed = speed);
   }
 
-  setWhoIsPlayings(index: number) {
+  setWhoIsPlayings(index: number): number {
     return (this.whoIsPlaying = index);
   }
 
-  setActivePlayers(playersName: string[]) {
-    return (this.activePlayers = playersName);
+  setActivePlayers(players: Player[]): Player[] {
+    return (this.activePlayers = players);
   }
 
-  setRound(round: number) {
+  setRound(round: number): number {
     return (this.round = round);
   }
 }

@@ -1,33 +1,36 @@
-import { lessPlayer, morePlayer, onSubmit, form } from "./modules/home.ts";
 import GameManager from "./modules/GameManager.ts";
+import { lessPlayer, morePlayer, onSubmit, form } from "./modules/home.ts";
 import { GameConstructor } from "./modules/types.ts";
+import * as ScoreBaord from "./modules/scoreboard.ts";
 
+ScoreBaord;
 // # HOME
 
 const lessButton: HTMLButtonElement | null =
   document.querySelector(".lessPlayer");
 const moreButton: HTMLButtonElement | null =
   document.querySelector(".morePlayer");
-const gameIndicationsContainer: HTMLDivElement | null =
-  document.querySelector(".game-container");
 
 lessButton?.addEventListener("click", () => lessPlayer());
 
 moreButton?.addEventListener("click", () => morePlayer());
 
-form?.addEventListener("submit", (event) => {
-  const players = onSubmit(event);
-  console.log(players);
+//  # GAME
 
-  if (gameIndicationsContainer && players) {
+form?.addEventListener("submit", (event) => {
+  const gameContainer: HTMLDivElement | null =
+    document.querySelector(".game-container");
+  if (!gameContainer) return;
+
+  const players = onSubmit(event);
+  if (players) {
     const gameOptions: GameConstructor = {
       nbPlayers: players.length,
-      players: players,
+      playersName: players,
       gameSpeed: 1,
-      gameContainer: gameIndicationsContainer,
+      gameContainer: gameContainer,
     };
-    const Game = new GameManager(gameOptions);
+
+    const game = new GameManager(gameOptions);
   }
 });
-
-//  # GAME
