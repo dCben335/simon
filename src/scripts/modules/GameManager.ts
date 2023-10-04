@@ -1,17 +1,26 @@
+type gameConstructor = {
+  nbPlayers: number;
+  players: string[];
+  round: number;
+  activePlayers: string[];
+  whoIsPlaying: string;
+  gameSpeed: number;
+};
+
 export default class GameManager {
-  constructor(
-    nbPlayers,
-    players,
-    round = 1,
-    activePlayers,
-    whoIsPlaying,
-    gameSpeed = 1
-  ) {
-    this.nbPlayers = nbPlayers;
-    this.players = players;
-    this.round = round;
-    this.activePlayers = activePlayers;
-    this.whoIsPlaying = whoIsPlaying;
-    this.gameSpeed = gameSpeed;
+  nbPlayers: number;
+  players: string[];
+  round: number;
+  activePlayers: string[];
+  whoIsPlaying: string;
+  gameSpeed: number;
+
+  constructor(gameConstructor: gameConstructor) {
+    this.nbPlayers = gameConstructor.nbPlayers;
+    this.players = gameConstructor.players;
+    this.round = gameConstructor.round;
+    this.activePlayers = gameConstructor.activePlayers;
+    this.whoIsPlaying = gameConstructor.whoIsPlaying;
+    this.gameSpeed = gameConstructor.gameSpeed;
   }
 }
