@@ -3,7 +3,9 @@
 @import './modules/game.module.css';
 @import './modules/home.module.css';
 
-*, ::before, ::after {
+*,
+::before,
+::after {
    padding: 0;
    margin: 0;
    box-sizing: border-box;
@@ -20,7 +22,7 @@
    --primary-color-variant: #1010109f;
    --secondary-color: #ffffff;
    --secondary-color-variant: #ffffff1c;
-   
+
    --red: #ff0000;
    --green: #00ff00;
    --blue: #0000ff;
@@ -79,7 +81,10 @@ input {
    border-radius: inherit;
    padding: 5px;
 }
-h1, h2, h3 {
+
+h1,
+h2,
+h3 {
    text-transform: uppercase;
    letter-spacing: 1.3px;
    font-weight: 500;
@@ -88,10 +93,16 @@ h1, h2, h3 {
 h2 {
    font-size: clamp(1.4rem, 1.4rem + 2vh, 5rem);
 }
+
 .play-button {
    padding: .35rem 1.3rem;
 }
 
 .hidden {
    display: none;
+}
+
+.game-board button.activeColor {
+   opacity: 1;
+   filter: brightness(1);
 }

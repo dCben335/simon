@@ -7,33 +7,37 @@
     width: 100%;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%) ;
+    transform: translateX(-50%);
 }
+
 .game:nth-child(2) {
-    width: 50%;    
+    width: 50%;
     transform: rotate(180deg) translateX(50%);
     left: 50%;
     top: 0;
 }
+
 .game:nth-child(3) {
     width: 50%;
     left: 0%;
     top: 50%;
     transform: rotate(90deg) translate(-25%, 60%);
 }
-.game:nth-child(4){
+
+.game:nth-child(4) {
     width: 50%;
     top: 50%;
     right: 0;
     transform: rotate(-90deg) translate(25%, 60%);
 }
 
-.game > .game-infos  {
+.game>.game-infos {
     display: grid;
     margin: 10vh auto 0 auto;
     place-items: center;
 }
-.game > .game-infos > div {
+
+.game>.game-infos>div {
     display: grid;
     place-items: center;
     padding: 4.25rem 3rem;
@@ -41,30 +45,31 @@
     gap: 12.5vw;
 }
 
-.game > .game-infos h2 {
+.game>.game-infos h2 {
     font-size: clamp(1.6rem, 1.6rem + 5vh, 7rem);
 }
 
 
-.game > .game-infos article {
+.game>.game-infos article {
     display: grid;
     place-items: center;
     gap: 1rem;
-    font-size: clamp(1.3rem, 1.3rem + 1.95vh , 5rem);
+    font-size: clamp(1.3rem, 1.3rem + 1.95vh, 5rem);
 }
-.game > .game-infos > div h3{
+
+.game>.game-infos>div h3 {
     opacity: .45;
 }
 
-.game > .game-board {
-    --_number_of-buttons: 4; 
+.game>.game-board {
+    --_number_of-buttons: 4;
     max-height: 110%;
     aspect-ratio: 1/1;
     height: 110%;
     max-width: 90%;
     position: absolute;
     display: grid;
-    place-items: center; 
+    place-items: center;
     clip-path: circle(50%);
     bottom: 0;
     transform: translate(-50%, 55%);
@@ -88,12 +93,13 @@
     inset: 0;
     z-index: -1;
 }
-.game-board button  {
+
+.game-board button {
     position: absolute;
     height: 100%;
     width: calc(100% / var(--_number_of-buttons));
     bottom: 0;
-    filter: brightness(.65);
+    filter: brightness(.35);
     transition: filter .35s ease-in-out;
 }
 
@@ -106,8 +112,9 @@
     left: 0;
     transform: skew(25deg) rotate(-30deg) scale(1.5);
     transform-origin: left;
-    z-index:2
+    z-index: 2
 }
+
 .game-board button:nth-of-type(2) {
     background-color: yellow;
     left: calc(100% / var(--_number_of-buttons));
@@ -115,6 +122,7 @@
     transform-origin: left;
     z-index: 1;
 }
+
 .game-board button:nth-of-type(3) {
     background-color: green;
     left: calc(100% / var(--_number_of-buttons) * 2);
@@ -122,6 +130,7 @@
     transform-origin: left;
     z-index: 1;
 }
+
 .game-board button:nth-of-type(4) {
     background-color: blue;
     left: calc(100% / var(--_number_of-buttons) * 3);

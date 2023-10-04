@@ -1,16 +1,14 @@
 type PlayerBoardScore = {
-    rank : number
-    gamertag: string
-    score: number
-}
-
-type gameConstructor = {
-    nbPlayers: number;
-    players: string[];
-    gameSpeed: number;
+  rank: number;
+  gamertag: string;
+  score: number;
 };
 
-export type {
-    PlayerBoardScore,
-    gameConstructor,
-}
+type GameConstructor = {
+  nbPlayers: number;
+  players: string[];
+  gameSpeed: number;
+  gameContainer: HTMLDivElement;
+};
+
+export type { PlayerBoardScore, GameConstructor };
