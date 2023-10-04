@@ -1,0 +1,27 @@
+aside.scoreboard {
+    position: fixed;
+    inset: 0;
+    background-color: var(--primary-color-variant);
+    backdrop-filter: blur(16px);
+    z-index: 1000;
+    display: grid;
+    place-content: center;
+}
+
+aside.scoreboard > div {
+    padding: 1rem 3rem;
+    border: 1px solid var(--secondary-color);
+}
+
+aside.scoreboard h2 {
+    margin-bottom: 1.5rem;
+}
+
+aside.scoreboard ol {
+    display: grid;
+    gap: 1.2rem;
+}
+
+aside.scoreboard li::marker {
+    padding-left: 0.5rem ;
+}

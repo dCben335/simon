@@ -1,0 +1,97 @@
+@import './modules/scoreboard.module.css';
+@import './modules/animated-rgb.module.css';
+@import './modules/game.module.css';
+@import './modules/home.module.css';
+
+*, ::before, ::after {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+@font-face {
+   font-family: coda;
+   src: url(../assets/fonts/coda.ttf);
+}
+
+
+:root {
+   --primary-color: #101010;
+   --primary-color-variant: #1010109f;
+   --secondary-color: #ffffff;
+   --secondary-color-variant: #ffffff1c;
+   
+   --red: #ff0000;
+   --green: #00ff00;
+   --blue: #0000ff;
+   --yellow: #ffff00;
+   --linear: linear-gradient(5deg, #0000ff, #00ff00, #ffff00, #ff0000);
+}
+
+::-webkit-scrollbar-thumb {
+   background-color: var(--secondary-color);
+   border-radius: 20px;
+   border: 3px solid var(--primary-color);
+}
+
+::-webkit-scrollbar {
+   width: 12px;
+   background: var(--primary-color);
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+main {
+   height: 100%;
+}
+
+body {
+   background-color: var(--primary-color);
+   color: var(--secondary-color);
+   font-family: coda;
+}
+
+#app {
+   height: 100vh;
+   overflow: hidden;
+}
+
+button {
+   border: 0;
+   background-color: transparent;
+   cursor: pointer;
+   color: inherit;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+}
+
+input {
+   color: inherit;
+   border: none;
+   outline: none;
+   background-color: inherit;
+   width: 100%;
+   border-radius: inherit;
+   padding: 5px;
+}
+h1, h2, h3 {
+   text-transform: uppercase;
+   letter-spacing: 1.3px;
+   font-weight: 500;
+}
+
+h2 {
+   font-size: clamp(1.4rem, 1.4rem + 2vh, 5rem);
+}
+.play-button {
+   padding: .35rem 1.3rem;
+}
+
+.hidden {
+   display: none;
+}

@@ -1,0 +1,168 @@
+.home {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+}
+
+section.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 33vw;
+}
+
+/* : Logo  */
+
+.circle {
+    border-radius: 50%;
+
+}
+
+.animated-rgb.circle>div::before,
+.animated-rgb.circle>div::after {
+    inset: -5px;
+    filter: blur(15px);
+    animation-duration: 30s;
+}
+
+.logo {
+    width: 20vw;
+}
+
+/* : Formulaire pour entrer le nombre de joueurs */
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 10vh;
+}
+
+form fieldset {
+    margin: 5vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0;
+    font-family: coda;
+}
+
+
+
+form label {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+form fieldset>input[type="text"] {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: coda;
+    text-transform: uppercase;
+}
+
+/* : Bouton pour augmenter le nombre de joueurs */
+.svgNbPlayer {
+    width: 5vw;
+}
+
+.nbplayerbutton {
+    position: relative;
+}
+
+.nbplayerbutton>input[type="number"] {
+    position: absolute;
+    text-align: center;
+    font-size: 20px;
+    bottom: 0px;
+    left: 60%;
+    transform: translateX(-50%);
+}
+
+.nbplayerbutton>button {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    font-size: 25px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.nbplayerbutton>button:first-of-type {
+    left: -35px;
+}
+
+.nbplayerbutton>button:last-of-type {
+    right: -35px;
+}
+
+/* : button jouer */
+
+.play-button {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* : all players input */
+.allPlayerInput {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 80vw;
+}
+
+/*  : score board  */
+
+.scoreboard {
+    margin: 15vh auto;
+}
+
+.scoreboard h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.scoreboard>section {
+    display: grid;
+    grid-template-columns: 1;
+    gap: 10px;
+    max-height: 50vh;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.scoreboard>section>div {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.scoreboard>section>div.scoreboardHead>span {
+    font-weight: bold;
+}
+
+
+.scoreboard>section>div.scoreboardRow {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.scoreboard>section>div.scoreboardRow::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    background: var(--linear);
+    border-radius: 15px;
+    z-index: -1;
+}

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/scripts/app.ts" defer></script>
+    <link rel="stylesheet" href="/src/styles/global.css">
+
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app">
+      <main>
+          <div class="game hidden">
+              <section class="game-infos">
+                  <h2>GAME OVER</h2>
+                  <div>
+                      <article>
+                          <h3>SCORE</h3>
+                          <span>1787</span>
+                      </article>
+                      <article>
+                          <h3>ROUND</h3>
+                          <span>10</span>
+                      </article>
+                  </div>
+              </section>
+
+              <section class="game-board">
+                  <div class="game-indications">
+                      <div>
+                          <h2>CONCENTRATION</h2>
+                      </div>
+                  </div>
+
+                  <div class="game-buttons">
+                      <button></button>
+                      <button></button>
+                      <button></button>
+                      <button></button>
+                  </div>
+              </section>       
+          </div>  
+          <div class="home">
+              <section class="scoreboard">
+              <h3>Tableau des scores</h3>
+              <section>
+                  <!--HERE INSERT SCORES-->
+              </section>
+              </section>
+              <section class="center">
+              <div class="animated-rgb circle">
+                  <div class="">
+                  <img class="logo" src="./assets/images/logo.png" alt="logo" />
+                  </div>
+              </div>
+              <form method="post">
+                  <div class="nbplayerbutton">
+                  <button class="lessPlayer" type="button">-</button>
+                  <svg
+                      class="svgNbPlayer"
+                      viewBox="0 0 80 65"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                  >
+                      <path
+                      d="M12.2011 20.2678L22.3587 20.2628C28.1577 20.2599 32.8567 24.9586 32.8543 30.7576L32.8516 37.174L1.69395 37.1893L1.69666 30.7729C1.6991 24.974 6.4021 20.2706 12.2011 20.2678Z"
+                      stroke="#EBFF00"
+                      stroke-width="3"
+                      />
+                      <path
+                      d="M23.4407 8.80422C23.4389 12.9415 20.6054 15.8903 17.5761 15.8917C14.5469 15.8932 11.7158 12.9473 11.7176 8.80998C11.7193 4.67265 14.5529 1.72394 17.5821 1.72245C20.6113 1.72096 23.4424 4.66688 23.4407 8.80422Z"
+                      stroke="#EBFF00"
+                      stroke-width="3"
+                      />
+                      <path
+                      d="M57.0547 20.437L67.2123 20.432C73.0113 20.4291 77.7103 25.1278 77.7079 30.9268L77.7051 37.3432L46.5475 37.3585L46.5502 30.9421C46.5527 25.1431 51.2557 20.4398 57.0547 20.437Z"
+                      stroke="#0019FF"
+                      stroke-width="3"
+                      />
+                      <path
+                      d="M68.2942 8.97316C68.2925 13.1105 65.4589 16.0592 62.4297 16.0607C59.4005 16.0622 56.5694 13.1163 56.5711 8.97893C56.5729 4.84159 59.4064 1.89289 62.4357 1.8914C65.4649 1.88991 68.296 4.83583 68.2942 8.97316Z"
+                      stroke="#0019FF"
+                      stroke-width="3"
+                      />
+                      <path
+                      d="M30.212 32.4711L46.7533 32.463C56.9706 32.458 65.2498 40.7366 65.2455 50.9539L65.2407 62.4216L11.6994 62.4479L11.7042 50.9802C11.7085 40.7629 19.9947 32.4761 30.212 32.4711Z"
+                      fill="#101010"
+                      stroke="#FF0404"
+                      stroke-width="3"
+                      />
+                      <path
+                      d="M49.6631 14.4775C49.6601 21.7218 44.6656 27.1902 38.9721 27.193C33.2786 27.1958 28.2888 21.7323 28.2919 14.488C28.2949 7.24379 33.2894 1.77537 38.9828 1.77257C44.6763 1.76977 49.6662 7.23328 49.6631 14.4775Z"
+                      fill="#101010"
+                      stroke="#FF0404"
+                      stroke-width="3"
+                      />
+                      <text x="20" y="35" class="small">My</text>
+                  </svg>
+                  <button class="morePlayer" type="button">+</button>
+
+                  <input class="nbPlayerText" value="1" disabled type="number" />
+                  <!--HERE button + & - for player-->
+                  </div>
+                  <div class="allPlayerInput">
+                  <fieldset>
+                      <label for="gamertag1">Nom du joueur 1</label>
+                      <input
+                      type="text"
+                      name="gamertag1"
+                      id="gamertag1"
+                      placeholder="Entrez votre pseudo"
+                      maxlength="15"
+                      />
+                  </fieldset>
+                  </div>
+
+                  <button type="button" class="animated-rgb">
+                  <div>
+                      <span class="play-button">JOUER</span>
+                  </div>
+                  </button>
+              </form>
+              </section>
+              <section class="nothing"></section>
+          </div>
+      </main>
+    </div>
+  </body>
+</html>
