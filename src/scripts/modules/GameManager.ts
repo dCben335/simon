@@ -58,7 +58,7 @@ export default class GameManager {
   generateHTML() : void {
     this.gameContainer.classList.add(`${playerClasses[this.players.length]}`)
 
-    const playerInfos = `
+    const playerInfos: string = `
         <div class="game-infos">
             <h2>GAME OVER</h2>
             <div>
@@ -73,7 +73,7 @@ export default class GameManager {
             </div>
         </div>
     `;
-    
+
     this.players.forEach((element: Player, index: number) => {
       this.gameContainer.innerHTML += `
           <div class="game player-${playerClasses[index + 1]}">
