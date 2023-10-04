@@ -1,4 +1,5 @@
 import { lessPlayer, morePlayer, showScoreBoard } from "./modules/home.ts";
+import * as Tone from "tone";
 
 // const synth = new Tone.Synth().toDestination();
 
@@ -10,8 +11,10 @@ document.querySelectorAll(".game-board button").forEach((button, index) => {
 
 // # HOME
 
-const lessButton: HTMLButtonElement | null = document.querySelector(".lessPlayer");
-const moreButton: HTMLButtonElement | null = document.querySelector(".morePlayer");
+const lessButton: HTMLButtonElement | null =
+  document.querySelector(".lessPlayer");
+const moreButton: HTMLButtonElement | null =
+  document.querySelector(".morePlayer");
 
 lessButton?.addEventListener("click", () => {
   lessPlayer();
