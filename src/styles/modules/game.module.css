@@ -16,17 +16,17 @@
     pointer-events: all;
 }
 
-.game-container.one>.game {
+.game-container.one >.game {
     height: 100%;
     width: 100%;
 }
 
-.game-container.two>.game {
+.game-container.two >.game {
     height: 75%;
     width: 100%;
 }
 
-.game-container:is(.three, .four)>.game {
+.game-container:is(.three, .four) >.game {
     height: 60%;
     width: 100%;
 }
@@ -42,7 +42,6 @@
     left: 50%;
     top: 0;
 }
-
 .game:nth-child(3) {
     bottom: 0;
     left: -50%;
@@ -144,7 +143,7 @@
     transition: filter .35s ease-in-out;
 }
 
-.game-board button:is(:hover, :focus-within) {
+.playing .game-board button:is(:hover) {
     filter: brightness(1);
 }
 
