@@ -18,6 +18,7 @@ export default class GameManager {
   activePlayers: Player[] | undefined;
   whoIsPlaying: number;
   pattern: string[];
+  playerCurrentMove: string[];
 
   colorPossibilities: { [key: string]: string } = {
     red: "C4",
@@ -41,6 +42,7 @@ export default class GameManager {
     this.whoIsPlaying = 0;
     this.pattern = [];
     this.players = this.setPlayers(playersName);
+    this.playerCurrentMove = [];
 
     this.startGame();
   }
@@ -58,7 +60,7 @@ export default class GameManager {
     this.setActivePlayers(this.players);
     this.generateHTML();
     // this.countdown();
-    this.createPattern(5);
+    this.createPattern(2);
   }
 
   generateHTML(): void {
@@ -171,28 +173,39 @@ export default class GameManager {
   }
 
   playerIsPlaying() {
-    const buttonsCtr = document.querySelector(
-      `.player-${
-        playerClasses[this.whoIsPlaying + 1]
-      } > section.game-board > div.game-buttons`
-    );
+    const synth = new Tone.Synth().toDestination();
     const buttonsOfThePlayerThatPlay = document.querySelectorAll(
       `.player-${
         playerClasses[this.whoIsPlaying + 1]
       } > section.game-board > div.game-buttons > button`
     );
-    buttonsCtr?.classList.add("zindexTop");
     buttonsOfThePlayerThatPlay.forEach((button) => {
       button.addEventListener("click", () => {
-        // this.playRound(button);
-        console.log(button);
+        const note: string = this.colorPossibilities[button.dataset.color];
+        synth.triggerAttackRelease(note, "4n");
+        this.matchingPatterns(button.dataset.color);
       });
     });
 
     // this.roundTransition();
   }
 
+  matchingPatterns(color: string) {
+    this.playerCurrentMove = [...this.playerCurrentMove, color];
+    if (color === this.pattern[this.playerCurrentMove.length - 1]) {
+      this.players[this.whoIsPlaying].score += 5 * this.round;
+      if (this.playerCurrentMove.length === this.pattern.length) {
+        this.roundTransition();
+      }
+    } else {
+      this.activePlayers?.filter((player) => player !== this.whoIsPlaying);
+      console.log("perdu", this.playerCurrentMove, this.pattern);
+    }
+  }
+
   roundTransition() {
+    this.round++;
+    this.playerCurrentMove = [];
     setTimeout(() => {
       this.createPattern(1);
     }, 2000);
