@@ -6,6 +6,14 @@
 .game {
     overflow: hidden;
     position: absolute;
+    user-select: none;
+    pointer-events: none;
+}
+
+.game.playing {
+    z-index: 100;
+    user-select: all;
+    pointer-events: all;
 }
 
 .game-container.one>.game {
