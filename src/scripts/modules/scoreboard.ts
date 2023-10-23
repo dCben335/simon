@@ -22,7 +22,6 @@ const templateScoreHead: string = `
     <span>BEST SCORE</span>
   </div>
 `;
-
 (function showScoreBoard() {
   const scoreboard: PlayerBoardScore[] = JSON.parse(
     localStorage.getItem("scoreboard") || "[]"

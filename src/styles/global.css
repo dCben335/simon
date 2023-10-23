@@ -102,8 +102,3 @@ h2 {
 .hidden {
    display: none;
 }
-
-.game-board button.activeColor {
-   opacity: 1;
-   filter: brightness(1);
-}
