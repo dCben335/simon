@@ -2,6 +2,7 @@
 @import './modules/animated-rgb.module.css';
 @import './modules/game.module.css';
 @import './modules/home.module.css';
+@import './modules/modal.module.css';
 
 *,
 ::before,

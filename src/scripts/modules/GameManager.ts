@@ -1,5 +1,6 @@
 import * as Tone from "tone";
-import { GameConstructor, Player } from "./types";
+import { GameConstructor, Player, PlayerBoardScore } from "./types";
+import { showPartyRecap } from "./retrymodal";
 
 const playerClasses: { [key: number]: string } = {
   1: "one",
@@ -173,7 +174,8 @@ export default class GameManager {
     this.playerCurrentMove = [...this.playerCurrentMove, color];
 
     if (color === this.pattern[this.playerCurrentMove.length - 1]) {
-      this.players[this.whoIsPlaying].score += 5 * this.round;
+      this.players[this.whoIsPlaying].score +=
+        (this.nbPlayers > 1 ? 2 : 5) * (this.round / 2); //multiplicator here
 
       if (this.playerCurrentMove.length === this.pattern.length) {
         this.roundTransition();
@@ -197,10 +199,24 @@ export default class GameManager {
   }
 
   endGame() {
+    this.disableButtons();
     console.log("finito");
-    console.log("====================================");
-    console.log(this.players);
-    console.log("====================================");
+    const scoreboard: PlayerBoardScore[] = JSON.parse(
+      localStorage.getItem("scoreboard") || "[]"
+    ).map(({ gamertag, score }: PlayerBoardScore) => {
+      return { gamertag, score };
+    });
+    const newScore = this.players.map(({ gamertag, score }) => {
+      return { gamertag, score };
+    });
+
+    const newScoreboard = [...newScore, ...scoreboard];
+
+    localStorage.setItem("scoreboard", JSON.stringify(newScoreboard));
+    const retry = document.querySelector(".retry") as HTMLDivElement;
+
+    showPartyRecap(this.players);
+    retry.classList.remove("hidden");
   }
 
   disableButtons() {
@@ -227,7 +243,7 @@ export default class GameManager {
   setPlayers(playersName: string[]): Player[] {
     return playersName.map((playerName) => {
       return {
-        name: playerName,
+        gamertag: playerName,
         score: 0,
         round: this.round || 1,
       };
@@ -253,8 +269,8 @@ export default class GameManager {
 
     currentPlayer.textContent =
       this.players.length === 1
-        ? `à toi de jouer ${this.players[this.whoIsPlaying].name}`
-        : `à ${this.players[this.whoIsPlaying].name} de jouer`;
+        ? `à toi de jouer ${this.players[this.whoIsPlaying].gamertag}`
+        : `à ${this.players[this.whoIsPlaying].gamertag} de jouer`;
 
     this.enableButtonsOfPlayer(this.whoIsPlaying);
   }

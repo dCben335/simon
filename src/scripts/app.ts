@@ -16,13 +16,13 @@ lessButton?.addEventListener("click", () => lessPlayer());
 moreButton?.addEventListener("click", () => morePlayer());
 
 //  # GAME
-
+let players;
 form?.addEventListener("submit", (event) => {
   const gameContainer: HTMLDivElement | null =
     document.querySelector(".game-container");
   if (!gameContainer) return;
 
-  const players = onSubmit(event);
+  players = onSubmit(event);
   if (players) {
     const gameOptions: GameConstructor = {
       nbPlayers: players.length,

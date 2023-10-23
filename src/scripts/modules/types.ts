@@ -1,5 +1,4 @@
 type PlayerBoardScore = {
-  rank: number;
   gamertag: string;
   score: number;
 };
@@ -12,7 +11,7 @@ type GameConstructor = {
 };
 
 type Player = {
-  name: string;
+  gamertag: string;
   score: number;
   round: number;
 };
