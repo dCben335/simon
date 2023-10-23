@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: 1;
     gap: 10px;
-    max-height: 50vh;
+    max-height: 30vh;
     overflow-y: scroll;
     padding-right: 10px;
 }
@@ -42,5 +42,5 @@
     left: 0;
     background: var(--linear);
     border-radius: 15px;
-    z-index: -1;
+    /* z-index: -1; */
 }

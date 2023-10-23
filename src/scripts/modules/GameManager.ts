@@ -67,8 +67,9 @@ export default class GameManager {
   updateRound() {
     this.round++;
     this.activePlayers.forEach((player: number) => {
+      this.players[player].round = this.round;
       const roundTag = this.gameContainer.querySelector(`.player-${playerClasses[player + 1]} .round`) as HTMLHeadingElement;
-      roundTag.textContent = this.round.toString();
+      roundTag.textContent = this.players[player].round.toString();
     })
   }
   
@@ -194,19 +195,19 @@ export default class GameManager {
     console.log("finito");
     const scoreboard: PlayerBoardScore[] = JSON.parse(
       localStorage.getItem("scoreboard") || "[]"
-    ).map(({ gamertag, score }: PlayerBoardScore) => {
-      return { gamertag, score };
-    });
-    const newScore = this.players.map(({ gamertag, score }) => {
-      return { gamertag, score };
-    });
+      ).map(({ gamertag, score }: PlayerBoardScore) => {
+        return { gamertag, score };
+      });
+      const newScore = this.players.map(({ gamertag, score }) => {
+        return { gamertag, score };
+      });
+      
+      const newScoreboard = [...newScore, ...scoreboard];
+      
+      localStorage.setItem("scoreboard", JSON.stringify(newScoreboard));
+      const retry = document.querySelector(".retry") as HTMLDivElement;
+      showPartyRecap(this.players);
 
-    const newScoreboard = [...newScore, ...scoreboard];
-
-    localStorage.setItem("scoreboard", JSON.stringify(newScoreboard));
-    const retry = document.querySelector(".retry") as HTMLDivElement;
-
-    showPartyRecap(this.players);
     retry.classList.remove("hidden");
   }
 
@@ -234,7 +235,7 @@ export default class GameManager {
       return {
         gamertag: playerName,
         score: 0,
-        round: this.round || 1,
+        round: this.round,
       };
     });
   }
