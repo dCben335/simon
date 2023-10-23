@@ -6,10 +6,8 @@ import * as ScoreBaord from "./modules/scoreboard.ts";
 ScoreBaord;
 // # HOME
 
-const lessButton: HTMLButtonElement | null =
-  document.querySelector(".lessPlayer");
-const moreButton: HTMLButtonElement | null =
-  document.querySelector(".morePlayer");
+const lessButton = document.querySelector(".lessPlayer") as HTMLButtonElement;
+const moreButton = document.querySelector(".morePlayer") as HTMLButtonElement;
 
 lessButton?.addEventListener("click", () => lessPlayer());
 
@@ -18,8 +16,7 @@ moreButton?.addEventListener("click", () => morePlayer());
 //  # GAME
 
 form?.addEventListener("submit", (event) => {
-  const gameContainer: HTMLDivElement | null =
-    document.querySelector(".game-container");
+  const gameContainer = document.querySelector(".game-container") as HTMLDivElement;
   if (!gameContainer) return;
 
   const players = onSubmit(event);

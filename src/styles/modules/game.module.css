@@ -2,53 +2,56 @@
     height: 100vh;
     position: relative;
 }
+.game-container.one > .player {
+    height: 100%;
+    width: 100%;
+}
+.game-container.two  > .player {
+    height: 75%;
+    width: 100%;
+}
+.game-container:is(.three, .four)  > .player {
+    height: 60%;
+    width: 100%;
+}
 
-.game {
+.game-container > .game-indications {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.player {
     overflow: hidden;
     position: absolute;
     user-select: none;
     pointer-events: none;
 }
-
-.game.playing {
+.player.playing {
     z-index: 100;
     user-select: all;
     pointer-events: all;
 }
 
-.game-container.one >.game {
-    height: 100%;
-    width: 100%;
-}
-
-.game-container.two >.game {
-    height: 75%;
-    width: 100%;
-}
-
-.game-container:is(.three, .four) >.game {
-    height: 60%;
-    width: 100%;
-}
-
-.game:nth-child(1) {
+.player:nth-of-type(1) {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.game:nth-child(2) {
+.player:nth-of-type(2) {
     transform: rotate(180deg) translateX(50%);
     left: 50%;
     top: 0;
 }
-.game:nth-child(3) {
+.player:nth-of-type(3) {
     bottom: 0;
     left: -50%;
     transform: rotate(90deg) translate(-20vh, -50%);
 }
 
-.game:nth-child(4) {
+.player:nth-of-type(4) {
     bottom: 0;
     right: -50%;
     transform: rotate(-90deg) translate(20vh, -50%);
@@ -56,51 +59,44 @@
 
 
 
-.game-infos {
+
+.player-infos {
     display: grid;
     place-items: center;
 }
 
-.game-infos>div {
+.player-infos > div {
     display: grid;
     place-items: center;
     grid-template-columns: 1fr 1fr;
-    gap: 15%;
+    gap: 5rem;
 }
 
-.game-infos h2 {
+.player-infos h2 {
     font-size: clamp(1.6rem, 1.6rem + 5vh, 7rem);
 }
 
 
-.game-infos article {
+.player-infos article {
     display: grid;
     place-items: center;
     gap: 1rem;
     font-size: clamp(1.3rem, 1.3rem + 1.95vh, 5rem);
 }
 
-.game-infos>div h3 {
+.player-infos > div h3 {
     opacity: .45;
 }
 
-.game>.game-infos {
+.player > .player-infos {
     margin: 10vh auto 0 auto;
 }
 
-.game>.game-infos>div {
+.player > .player-infos > div {
     padding: 4.25rem 3rem;
 }
 
-.game>.game-infos {
-    margin: 10vh auto 0 auto;
-}
-
-.game>.game-infos>div {
-    padding: 4.25rem 3rem;
-}
-
-.game>.game-board {
+.player > .player-board {
     --_number_of-buttons: 4;
     max-height: 110%;
     aspect-ratio: 1/1;
@@ -115,60 +111,61 @@
     left: 50%;
 }
 
-.game-board .game-circle {
+.player-board .player-circle {
     background-color: var(--primary-color);
     height: 75%;
     aspect-ratio: 1/1;
     clip-path: circle(50%);
-    padding: 5% 2rem;
+    padding: 5% 2rem 50% 2rem;
     display: grid;
-    justify-content: center;
+    place-items: center;
     box-shadow: inset 0 0 139px var(--secondary-color-variantS);
 }
 
-.game-board .game-buttons {
+.player-board .player-buttons {
     position: absolute;
     inset: 0;
     z-index: -1;
 }
 
-.game-board button {
+.player-board button {
     background-color: var(--_button-color, white);
-
     position: absolute;
     height: 100%;
     width: calc(100% / var(--_number_of-buttons));
     bottom: 0;
     filter: brightness(.35);
     transition: filter .35s ease-in-out;
-}
+}   
 
-.playing .game-board button:is(:hover) {
+.playing .player-board button:hover,
+.player-board button.activeColor {
     filter: brightness(1);
+    opacity: 1;
 }
 
-.game-board button:nth-of-type(1) {
+.player-board button:nth-of-type(1) {
     left: 0;
     transform: skew(25deg) rotate(-30deg) scale(1.5);
     transform-origin: left;
     z-index: 2
 }
 
-.game-board button:nth-of-type(2) {
+.player-board button:nth-of-type(2) {
     left: calc(100% / var(--_number_of-buttons));
     transform: rotateY(-287deg) rotateX(-320deg) skew(64deg) scale(40);
     transform-origin: left;
     z-index: 1;
 }
 
-.game-board button:nth-of-type(3) {
+.player-board button:nth-of-type(3) {
     left: calc(100% / var(--_number_of-buttons) * 2);
     transform: rotateY(287deg) rotateX(320deg) skew(-64deg) scale(40);
     transform-origin: left;
     z-index: 1;
 }
 
-.game-board button:nth-of-type(4) {
+.player-board button:nth-of-type(4) {
     left: calc(100% / var(--_number_of-buttons) * 3);
     transform: skew(-25deg) rotate(30deg) scale(1.5);
     transform-origin: right;
@@ -178,19 +175,19 @@
 
 
 /* 
-.game-board button:nth-of-type(5) {
+.player-board button:nth-of-type(5) {
     background-color: orange;
     left: calc(100% / var(--_number_of-buttons) * 4);
 }
-.game-board button:nth-of-type(6) {
+.player-board button:nth-of-type(6) {
     background-color: pink;
     left: calc(100% / var(--_number_of-buttons) * 5) ;
 }
-.game-board button:nth-of-type(7) {
+.player-board button:nth-of-type(7) {
     background-color: maroon;
     left: calc(100% / var(--_number_of-buttons) * 6) ;
 }
-.game-board button:nth-of-type(8) {
+.player-board button:nth-of-type(8) {
     background-color: violet;
     left: calc(100% / var(--_number_of-buttons) * 7) ;
 } */

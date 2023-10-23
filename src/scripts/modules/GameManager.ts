@@ -14,9 +14,9 @@ export default class GameManager {
   gameSpeed: number;
   gameContainer: HTMLDivElement;
 
-  round: number;
-  activePlayers: number[] | undefined;
-  whoIsPlaying: number;
+  round: number = 0;
+  activePlayers: number[] = [];
+  whoIsPlaying: number = -1;
   pattern: string[] = [];
   playerCurrentMove: string[] = [];
 
@@ -31,10 +31,6 @@ export default class GameManager {
     this.nbPlayers = nbPlayers;
     this.gameSpeed = gameSpeed || 700;
     this.gameContainer = gameContainer;
-
-    this.activePlayers;
-    this.round = 1;
-    this.whoIsPlaying = -1;
     this.players = this.setPlayers(playersName);
     this.startGame();
   }
@@ -43,15 +39,17 @@ export default class GameManager {
     this.setActivePlayers(this.players);
     this.generateHTML();
     this.countdown();
+    this.updateRound();
 
-    this.gameContainer.querySelectorAll(`.game-buttons button`).forEach((button) => {
+
+    this.gameContainer.querySelectorAll(`.player-buttons button`).forEach((button) => {
       button.addEventListener('click', () =>  this.matchingPatterns((button as HTMLButtonElement).dataset.color ?? ""));
     })
   }
 
   roundTransition() {
     this.disableButtons()
-    this.round++;
+    this.updateRound();
 
     this.playerCurrentMove = [];
 
@@ -59,18 +57,35 @@ export default class GameManager {
       this.createPattern(1);
     }, 2000);
   }
+
+  updateRound() {
+    this.round++;
+    this.activePlayers.forEach((player: number) => {
+      const roundTag = this.gameContainer.querySelector(`.player-${playerClasses[player + 1]} .round`) as HTMLHeadingElement;
+      roundTag.textContent = this.round.toString();
+    })
+  }
   
 
   setWhoIsPlayings(): void {
-    if (!this.activePlayers) return
-
     if (this.whoIsPlaying === -1) {
-
       this.whoIsPlaying = Math.floor(Math.random() * this.activePlayers.length);
+      return this.showWhoIsPlaying()
+    }
+
+    if (this.activePlayers.some((number) => number === this.whoIsPlaying)) {
+
+      this.whoIsPlaying = this.whoIsPlaying + 1 > this.activePlayers.length -1 
+        ? this.whoIsPlaying = this.activePlayers[0] 
+        : this.whoIsPlaying = this.activePlayers[this.whoIsPlaying + 1]; 
 
     } else {
-      this.whoIsPlaying = this.whoIsPlaying + 1 > this.activePlayers.length -1 ? this.activePlayers[0] : this.activePlayers[this.whoIsPlaying + 1]; 
+
+      this.whoIsPlaying = this.activePlayers[this.whoIsPlaying]
+        ? this.activePlayers[this.whoIsPlaying]
+        : this.whoIsPlaying = this.activePlayers[0]
     }
+    
     
     this.showWhoIsPlaying()
   }
@@ -108,20 +123,16 @@ export default class GameManager {
 
     let index: number = 0;
     const playingNotes = setInterval(() => {
-      const buttonColor = document.querySelectorAll(
-        `[data-color="${this.pattern[index]}"]`
-      );
-      buttonColor.forEach((button) => {
-        button?.classList.add("activeColor");
-      });
+
+      const buttonColor = this.gameContainer.querySelectorAll(`[data-color="${this.pattern[index]}"]`);
+
+      buttonColor.forEach((button) => button?.classList.add("activeColor"));
 
       const note: string = this.colorPossibilities[this.pattern[index]];
       synth.triggerAttackRelease(note, "4n");
 
       setTimeout(() => {
-        buttonColor.forEach((button) => {
-          button?.classList.remove("activeColor");
-        });
+        buttonColor.forEach((button) => button?.classList.remove("activeColor"));
       }, 300);
 
       index++;
@@ -134,8 +145,6 @@ export default class GameManager {
   }
 
   matchingPatterns(color: string) {
-    console.log(color);
-
     const synth = new Tone.Synth().toDestination();
 
     const note: string = this.colorPossibilities[color];
@@ -144,7 +153,7 @@ export default class GameManager {
     this.playerCurrentMove = [...this.playerCurrentMove, color];
 
     if (color === this.pattern[this.playerCurrentMove.length - 1]) {
-      this.players[this.whoIsPlaying].score += 5 * this.round;
+      this.updateScore()
 
       if (this.playerCurrentMove.length === this.pattern.length) {
         this.roundTransition();
@@ -155,8 +164,14 @@ export default class GameManager {
     }
   }
 
+  updateScore() {
+    this.players[this.whoIsPlaying].score += 5 * this.round;
+    const scoreTag = this.gameContainer.querySelector('.playing .score') as HTMLHeadingElement
+    scoreTag.textContent =  this.players[this.whoIsPlaying].score.toString();
+  }
+
   removeActivePlayer() {
-    const gameOverHeading = document.querySelector('.playing .game-infos .over') as HTMLHeadingElement
+    const gameOverHeading = this.gameContainer.querySelector('.playing .player-infos .over') as HTMLHeadingElement
     gameOverHeading.textContent = "GAME OVER";
 
     this.activePlayers = this.activePlayers?.filter((player) => player !== this.whoIsPlaying);
@@ -170,7 +185,7 @@ export default class GameManager {
 
 
   disableButtons() {
-    return document.querySelectorAll('.game').forEach((container) => {
+    return this.gameContainer.querySelectorAll('.player').forEach((container) => {
       if (container.classList.contains('playing')) {
         container.classList.remove('playing');
       }
@@ -178,7 +193,7 @@ export default class GameManager {
   }
 
   enableButtonsOfPlayer(playerNumber: number) {
-    const currentPlayerPlaying = document.querySelector(`.game.player-${playerClasses[playerNumber + 1]}`) as HTMLDivElement;
+    const currentPlayerPlaying = this.gameContainer.querySelector(`.player-${playerClasses[playerNumber + 1]}`) as HTMLDivElement;
     currentPlayerPlaying.classList.add('playing')
   }
 
@@ -205,12 +220,8 @@ export default class GameManager {
     return this.activePlayers = players.map((el, index) => index);
   }
 
-  setRound(round: number): number {
-    return (this.round = round);
-  }
-
   showWhoIsPlaying() {
-    const currentPlayer = document.querySelector('.game-indications > h2') as HTMLHeadingElement
+    const currentPlayer = this.gameContainer.querySelector('.game-indications > h2') as HTMLHeadingElement
 
     currentPlayer.textContent = this.players.length === 1 
       ? `à toi de jouer ${this.players[this.whoIsPlaying].name}`
@@ -223,22 +234,22 @@ export default class GameManager {
     this.gameContainer.classList.add(`${playerClasses[this.players.length]}`);
 
     const playerInfos: string = `
-        <div class="game-infos">
+        <div class="player-infos">
             <h2 class="over"></h2>
             <div>
                 <article>
                     <h3>SCORE</h3>
-                    <span class="score"></span>
+                    <span class="score">0</span>
                 </article>
                 <article>
                     <h3>ROUND</h3>
-                    <span class="round"></span>
+                    <span class="round">0</span>
                 </article>
             </div>
         </div>
     `;
 
-    const gamesIndications = `
+    const gamesIndications: string = `
       <div class="game-indications">
         <h2></h2>
       </div>
@@ -246,13 +257,13 @@ export default class GameManager {
 
     this.players.forEach((element: Player, index: number) => {
       this.gameContainer.innerHTML += `
-          <div class="game player-${playerClasses[index + 1]}">
-            ${this.players.length === 1 ? playerInfos : gamesIndications}
-            <section class="game-board">
-                <div class="game-circle">
+          <div class="player player-${playerClasses[index + 1]}">
+            ${this.players.length === 1 ? playerInfos : ""}
+            <section class="player-board">
+                <div class="player-circle">
                   ${ this.players.length === 1 ? gamesIndications: playerInfos }
                 </div>
-                <div class="game-buttons">
+                <div class="player-buttons">
                     ${Object.keys(this.colorPossibilities)
                       .map( (color) =>
                           `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
@@ -262,5 +273,9 @@ export default class GameManager {
           </div> 
       `;
     });
+
+    if (this.players.length > 1) {
+      this.gameContainer.innerHTML += gamesIndications;
+    }
   }
 }
