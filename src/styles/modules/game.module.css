@@ -35,23 +35,27 @@
 }
 
 .player:nth-of-type(1) {
+    --_border-color: var(--red);
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .player:nth-of-type(2) {
+    --_border-color: var(--blue);
     transform: rotate(180deg) translateX(50%);
     left: 50%;
     top: 0;
 }
 .player:nth-of-type(3) {
+    --_border-color: var(--yellow);
     bottom: 0;
     left: -50%;
     transform: rotate(90deg) translate(-20vh, -50%);
 }
 
 .player:nth-of-type(4) {
+    --_border-color: var(--green);
     bottom: 0;
     right: -50%;
     transform: rotate(-90deg) translate(20vh, -50%);
@@ -110,6 +114,22 @@
     transform: translate(-50%, 55%);
     left: 50%;
 }
+.game-container:not(.one) .player::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 0; 
+    height: 0; 
+    transform: translate(-50%);
+    border-left: 3.5rem solid transparent;
+    border-right: 3.5rem solid transparent;
+    border-top: 5.5rem solid var(--_border-color);
+    filter: brightness(.35);
+    opacity: 0;
+    
+    transition: all .35s ease-in-out;
+}
 
 .player-board .player-circle {
     background-color: var(--primary-color);
@@ -139,9 +159,11 @@
 }   
 
 .playing .player-board button:hover,
+.playing::after,
 .player-board button.activeColor {
     filter: brightness(1);
     opacity: 1;
+
 }
 
 .player-board button:nth-of-type(1) {
