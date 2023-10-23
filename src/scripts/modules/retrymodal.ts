@@ -1,22 +1,38 @@
 const retry = document.querySelector(".retry") as HTMLDivElement;
 
 function showPartyRecap(players: any) {
-  if (Array.isArray(players)) {
-    const templateModal = `
-    <div class="animated-rgb modal-content">
+  const templateModal = `
+    <div class="animated-rgb modal">
     <div>
-    ${players
-      .map(
-        (player: any) => `
-    <div>${player.gamertag}</div>
+    <div class="modal-content" >
+
+    <h3>Fin de partie</h3>
+    <div>
+    ${
+      Array.isArray(players)
+        ? players
+            .map(
+              ({ gamertag, score, round }: any, index) => `
+              <div class="scoreboardRow" >
+              <span class="rank">#${index + 1}</span>
+              <span class="gamertag">${gamertag}</span>
+              <span class="score">${score}</span>
+          </div>
     `
-      )
-      .join("")}
+            )
+            .join("")
+        : "<p>Aucun joueur</p>"
+    }
+    </div>
+    <div>
+    <button>Menu</button>
+    <button>Réessayer</button>
+    </div>
+    </div>
     </div>
     </div>
     `;
-    retry.innerHTML = templateModal;
-  }
+  retry.innerHTML = templateModal;
 }
 
 export { showPartyRecap };

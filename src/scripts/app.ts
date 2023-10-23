@@ -2,6 +2,7 @@ import GameManager from "./modules/GameManager.ts";
 import { lessPlayer, morePlayer, onSubmit, form } from "./modules/home.ts";
 import { GameConstructor } from "./modules/types.ts";
 import * as ScoreBaord from "./modules/scoreboard.ts";
+import { showPartyRecap } from "./modules/retrymodal.ts";
 
 ScoreBaord;
 // # HOME
@@ -33,3 +34,21 @@ form?.addEventListener("submit", (event) => {
     const game = new GameManager(gameOptions);
   }
 });
+
+showPartyRecap([
+  {
+    gamertag: "Player One",
+    score: 100,
+    round: 1,
+  },
+  {
+    gamertag: "Player 2",
+    score: 50,
+    round: 1,
+  },
+  {
+    gamertag: "Player 3",
+    score: 30,
+    round: 1,
+  },
+]);
