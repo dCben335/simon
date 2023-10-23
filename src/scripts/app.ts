@@ -12,12 +12,13 @@ const lessButton: HTMLButtonElement | null =
 const moreButton: HTMLButtonElement | null =
   document.querySelector(".morePlayer");
 
+let players;
+
 lessButton?.addEventListener("click", () => lessPlayer());
 
 moreButton?.addEventListener("click", () => morePlayer());
 
 //  # GAME
-let players;
 form?.addEventListener("submit", (event) => {
   const gameContainer: HTMLDivElement | null =
     document.querySelector(".game-container");
@@ -35,20 +36,20 @@ form?.addEventListener("submit", (event) => {
   }
 });
 
-showPartyRecap([
-  {
-    gamertag: "Player One",
-    score: 100,
-    round: 1,
-  },
-  {
-    gamertag: "Player 2",
-    score: 50,
-    round: 1,
-  },
-  {
-    gamertag: "Player 3",
-    score: 30,
-    round: 1,
-  },
-]);
+// showPartyRecap([
+//   {
+//     gamertag: "Player One",
+//     score: 50,
+//     round: 1,
+//   },
+//   {
+//     gamertag: "Player 2",
+//     score: 100,
+//     round: 1,
+//   },
+//   {
+//     gamertag: "Player 3",
+//     score: 70,
+//     round: 1,
+//   },
+// ]);

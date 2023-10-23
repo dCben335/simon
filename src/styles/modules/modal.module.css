@@ -30,3 +30,15 @@
     justify-content: start;
     align-items: center;
 }
+
+.modal .scoreboard>div>div {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.modal .modal-content .retryButtons {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
