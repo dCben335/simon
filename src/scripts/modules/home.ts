@@ -1,3 +1,5 @@
+import { SubmitReturn } from "./types";
+
 const nbPlayer = document.querySelector(".nbPlayerText") as HTMLInputElement;
 const allInputCtrl = document.querySelector(
   ".allPlayerInput"
@@ -11,6 +13,7 @@ const templateInput = (id: number): string => `
   <fieldset id="player${id}">
       <label for="gamertag${id}" >Nom du joueur ${id}</label>
       <input
+        class="gamertagInput"
         type="text"
         name="gamertag${id}"
         id="gamertag${id}"
@@ -21,21 +24,30 @@ const templateInput = (id: number): string => `
   </fieldset>
 `;
 
-function onSubmit(event: SubmitEvent): string[] | false {
+function onSubmit(event: SubmitEvent): SubmitReturn {
   event.preventDefault();
 
   let players: string[] = Array.from(
     form.querySelectorAll('input[type="text"]')
   )
     .filter((element) => (element as HTMLInputElement)?.value !== "")
-    .map((element) => (element as HTMLInputElement)?.value);
+    .map((element) => (element as HTMLInputElement).value);
+
+  let chosenMode = Array.from(form.querySelectorAll('input[type="radio"]'))
+    .filter((element) => (element as HTMLInputElement)?.checked)
+    .map((element) => (element as HTMLInputElement).value)
+    .toString();
 
   if (players.length === nbPlayer.valueAsNumber) {
     home.classList.add("hidden");
     game.classList.remove("hidden");
   }
 
-  return players.length === nbPlayer.valueAsNumber ? players : false;
+  const submit = {
+    players: players.length === nbPlayer.valueAsNumber ? players : [],
+    chosenMode: chosenMode,
+  } as SubmitReturn;
+  return submit as any;
 }
 
 const keyframes: { [key: string]: any }[] = [

@@ -42,3 +42,8 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.modal .modal-content .retryButtons > button {
+    padding: 2vh;
+    border: solid #fff 2px;
+}

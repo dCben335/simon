@@ -20,6 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    user-select: none;
 }
 
 .player {
@@ -70,9 +71,11 @@
     place-items: center;
     grid-template-columns: 1fr 1fr;
     gap: 5rem;
+    user-select: none;
 }
 
 .player-infos h2 {
+
     font-size: clamp(1.6rem, 1.6rem + 5vh, 7rem);
 }
 

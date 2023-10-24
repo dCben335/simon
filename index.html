@@ -80,6 +80,7 @@
                 <fieldset>
                   <label for="gamertag1">Nom du joueur 1</label>
                   <input
+                    class="gamertagInput"
                     type="text"
                     name="gamertag1"
                     id="gamertag1"
@@ -89,6 +90,41 @@
                   />
                 </fieldset>
               </div>
+              <div class="choiceDifficultyRadio">
+                <input
+                  type="radio"
+                  class="radioButton"
+                  name="radioButtonTest"
+                  value="easy"
+                  id="decouverte"
+                />
+                <label for="decouverte">Découverte</label>
+                <input
+                  type="radio"
+                  class="radioButton"
+                  name="radioButtonTest"
+                  value="normal"
+                  id="normal"
+                  checked
+                />
+                <label for="normal">Normal</label>
+                <input
+                  type="radio"
+                  class="radioButton"
+                  name="radioButtonTest"
+                  value="difficult"
+                  id="difficile"
+                />
+                <label for="difficile">Difficile</label>
+                <input
+                  type="radio"
+                  class="radioButton"
+                  name="radioButtonTest"
+                  value="hard"
+                  id="hard"
+                />
+                <label for="hard">Hardcore</label>
+              </div>
 
               <button type="submit" class="animated-rgb">
                 <div>
@@ -97,6 +133,7 @@
               </button>
             </form>
           </section>
+          <div class="simple-keyboard"></div>
         </div>
       </main>
     </div>

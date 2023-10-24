@@ -6,7 +6,10 @@ type PlayerBoardScore = {
 type GameConstructor = {
   nbPlayers: number;
   playersName: string[];
-  gameSpeed?: number;
+  gameSpeed: number;
+  minSpeed: number;
+  multiplicator: number;
+  patternsLevel: { [key: number]: number };
   gameContainer: HTMLDivElement;
 };
 
@@ -16,4 +19,9 @@ type Player = {
   round: number;
 };
 
-export type { PlayerBoardScore, GameConstructor, Player };
+type SubmitReturn = {
+  players: string[];
+  chosenMode: string;
+};
+
+export type { PlayerBoardScore, GameConstructor, Player, SubmitReturn };
