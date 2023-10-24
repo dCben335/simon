@@ -8,6 +8,7 @@ type GameConstructor = {
   playersName: string[];
   gameSpeed?: number;
   gameContainer: HTMLDivElement;
+  numberOfButtons: number
 };
 
 type Player = {

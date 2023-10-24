@@ -2,17 +2,22 @@ import * as Tone from "tone";
 import { GameConstructor, Player, PlayerBoardScore } from "./types";
 import { showPartyRecap } from "./retrymodal";
 
-const playerClasses: { [key: number]: string } = {
+const numberClasses: { [key: number]: string } = {
   1: "one",
   2: "two",
   3: "three",
   4: "four",
+  5: "five",
+  6: "six",
+  7: "seven",
+  8: "eight",
 };
 
 export default class GameManager {
   nbPlayers: number;
   players: Player[];
-  gameSpeed: number;
+  gameSpeed: number = 700;
+  numberOfButtons: number = 4;
   gameContainer: HTMLDivElement;
 
   round: number = 0;
@@ -26,17 +31,17 @@ export default class GameManager {
     yellow: "Ab4",
     green: "Eb4",
     blue: "Bb4",
+    purple: "Bb4",
+    orange: "Bb4",
+    brown: "Bb4",
+    cyan:"Bb4",
   };
 
-  constructor({
-    nbPlayers,
-    playersName,
-    gameSpeed,
-    gameContainer,
-  }: GameConstructor) {
+  constructor({ nbPlayers, playersName, gameSpeed, gameContainer, numberOfButtons} : GameConstructor) {
     this.nbPlayers = nbPlayers;
-    this.gameSpeed = gameSpeed || 700;
     this.gameContainer = gameContainer;
+    this.gameSpeed = gameSpeed || this.gameSpeed;
+    this.numberOfButtons = numberOfButtons || this.numberOfButtons;
     this.players = this.setPlayers(playersName);
     this.startGame();
   }
@@ -68,7 +73,7 @@ export default class GameManager {
     this.round++;
     this.activePlayers.forEach((player: number) => {
       this.players[player].round = this.round;
-      const roundTag = this.gameContainer.querySelector(`.player-${playerClasses[player + 1]} .round`) as HTMLHeadingElement;
+      const roundTag = this.gameContainer.querySelector(`.player-${numberClasses[player + 1]} .round`) as HTMLHeadingElement;
       roundTag.textContent = this.players[player].round.toString();
     })
   }
@@ -117,7 +122,8 @@ export default class GameManager {
   }
 
   createPattern(nbColorCreated: number): void {
-    const colors = Object.keys(this.colorPossibilities) as Array<string>;
+    const colors = Object.keys(this.colorPossibilities).splice(0, this.numberOfButtons) as Array<string>;
+    console.log(colors)
     const patternTab: Array<string> = Array(nbColorCreated)
       .fill("")
       .map(() => colors[Math.floor(Math.random() * colors.length)]);
@@ -220,7 +226,7 @@ export default class GameManager {
   }
 
   enableButtonsOfPlayer(playerNumber: number) {
-    const currentPlayerPlaying = this.gameContainer.querySelector(`.player-${playerClasses[playerNumber + 1]}`) as HTMLDivElement;
+    const currentPlayerPlaying = this.gameContainer.querySelector(`.player-${numberClasses[playerNumber + 1]}`) as HTMLDivElement;
     currentPlayerPlaying.classList.add('playing')
   }
 
@@ -240,9 +246,6 @@ export default class GameManager {
     });
   }
 
-  setGameSpeed(speed: number): number {
-    return (this.gameSpeed = speed);
-  }
 
   setActivePlayers(players: Player[]): number[] {
     return this.activePlayers = players.map((el, index) => index);
@@ -260,7 +263,9 @@ export default class GameManager {
   }
 
   generateHTML(): void {
-    this.gameContainer.classList.add(`${playerClasses[this.players.length]}`);
+    this.gameContainer.classList.add(`${numberClasses[this.players.length]}-players`);
+    this.gameContainer.classList.add(`${numberClasses[this.numberOfButtons]}-buttons`);
+    this.gameContainer.style.setProperty('--_number-of-buttons', `${this.numberOfButtons}`); 
 
     const playerInfos: string = `
         <div class="player-infos">
@@ -286,16 +291,15 @@ export default class GameManager {
 
     this.players.forEach((element: Player, index: number) => {
       this.gameContainer.innerHTML += `
-          <div class="player player-${playerClasses[index + 1]}">
+          <div class="player player-${numberClasses[index + 1]}">
             ${this.players.length === 1 ? playerInfos : ""}
             <section class="player-board">
                 <div class="player-circle">
                   ${ this.players.length === 1 ? gamesIndications: playerInfos }
                 </div>
                 <div class="player-buttons">
-                    ${Object.keys(this.colorPossibilities)
-                      .map(
-                        (color) =>
+                    ${Object.keys(this.colorPossibilities).splice(0, this.numberOfButtons)
+                      .map( (color: string, index: number) =>
                           `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
                       )
                       .join("")}

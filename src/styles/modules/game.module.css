@@ -2,15 +2,15 @@
     height: 100vh;
     position: relative;
 }
-.game-container.one > .player {
+.game-container.one-players > .player {
     height: 100%;
     width: 100%;
 }
-.game-container.two  > .player {
+.game-container.two-players  > .player {
     height: 75%;
     width: 100%;
 }
-.game-container:is(.three, .four)  > .player {
+.game-container:is(.two-players, .three-players, .four-players)  > .player {
     height: 60%;
     width: 100%;
 }
@@ -101,7 +101,6 @@
 }
 
 .player > .player-board {
-    --_number_of-buttons: 4;
     max-height: 110%;
     aspect-ratio: 1/1;
     height: 110%;
@@ -114,7 +113,7 @@
     transform: translate(-50%, 55%);
     left: 50%;
 }
-.game-container:not(.one) .player::after {
+.game-container:not(.one-players) .player::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -131,16 +130,30 @@
     transition: all .35s ease-in-out;
 }
 
+.game-container.two {
+    
+}
+
 .player-board .player-circle {
     background-color: var(--primary-color);
     height: 75%;
     aspect-ratio: 1/1;
     clip-path: circle(50%);
-    padding: 5% 2rem 50% 2rem;
+    padding: 5% 5rem 50% 5rem;
     display: grid;
     place-items: center;
     box-shadow: inset 0 0 139px var(--secondary-color-variantS);
 }
+.player-circle > .player-infos .over {
+    font-size: clamp(1.25rem, 1.25rem + 1.75vh, 5rem);
+    padding-bottom: .5rem;
+}
+.player-circle > .player-infos h3 {
+    font-size: clamp(.8rem, .8rem + 1.55vh, 5rem);
+}
+.player-circle  .player-infos article {
+    gap: .5rem;
+} 
 
 .player-board .player-buttons {
     position: absolute;
@@ -152,47 +165,102 @@
     background-color: var(--_button-color, white);
     position: absolute;
     height: 100%;
-    width: calc(100% / var(--_number_of-buttons));
+    width: calc(100% / var(--_number-of-buttons));
     bottom: 0;
     filter: brightness(.35);
     transition: filter .35s ease-in-out;
 }   
 
 .playing .player-board button:hover,
-.playing::after,
+.game-container:not(.one-players) .playing::after,
 .player-board button.activeColor {
     filter: brightness(1);
     opacity: 1;
 
 }
 
-.player-board button:nth-of-type(1) {
+
+
+.two-buttons .player-board button:nth-of-type(2) {
+    transform: translateX(100%);
+}
+
+
+.four-buttons .player-board button:nth-of-type(1) {
     left: 0;
     transform: skew(25deg) rotate(-30deg) scale(1.5);
     transform-origin: left;
     z-index: 2
 }
 
-.player-board button:nth-of-type(2) {
-    left: calc(100% / var(--_number_of-buttons));
-    transform: rotateY(-287deg) rotateX(-320deg) skew(64deg) scale(40);
+.four-buttons .player-board button:nth-of-type(2) {
+    left: calc(100% / var(--_number-of-buttons));
+    transform: rotateY(-287.5deg) rotateX(-320deg) skew(64deg) scale(40);
     transform-origin: left;
     z-index: 1;
 }
 
-.player-board button:nth-of-type(3) {
-    left: calc(100% / var(--_number_of-buttons) * 2);
-    transform: rotateY(287deg) rotateX(320deg) skew(-64deg) scale(40);
+.four-buttons .player-board button:nth-of-type(3) {
+    left: calc(100% / var(--_number-of-buttons) * 2);
+    transform: rotateY(287.5deg) rotateX(320deg) skew(-64deg) scale(40);
     transform-origin: left;
     z-index: 1;
 }
 
-.player-board button:nth-of-type(4) {
-    left: calc(100% / var(--_number_of-buttons) * 3);
+.four-buttons .player-board button:nth-of-type(4) {
+    left: calc(100% / var(--_number-of-buttons) * 3);
     transform: skew(-25deg) rotate(30deg) scale(1.5);
     transform-origin: right;
     z-index: 2;
 }
+
+
+
+
+.six-buttons .player-board button:nth-of-type(1) {
+    left: 0;
+    transform: skew(25deg) rotate(-30deg) scale(1.5);
+    transform-origin: left;
+    z-index: 3;
+}
+
+.six-buttons .player-board button:nth-of-type(2) {
+    right: calc(100% + 100% / 6);
+    transform: rotateY(277.5deg) rotateX(-400deg) skew(-35deg) scale(39);
+    transform-origin: left;
+    z-index: 2;
+}
+
+.six-buttons .player-board button:nth-of-type(3) {
+    right: 149.75%;
+    transform: rotateY(-0deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: left;
+    z-index: 1;
+}
+
+.six-buttons .player-board button:nth-of-type(4) {
+    left: 149.75%;
+    transform: rotateY(-0deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: right;
+    z-index: 1;
+}
+.six-buttons .player-board button:nth-of-type(5) {
+    left: calc(100% + 100% / 6);
+    transform: rotateY(277.5deg) rotateX(400deg) skew(35deg) scale(39);
+    transform-origin: right;
+    z-index: 1;
+}
+
+.six-buttons .player-board button:nth-of-type(6) {
+    right: 0;
+    transform: skew(-25deg) rotate(30deg) scale(1.5);
+    transform-origin: right;
+    z-index: 3;
+}
+
+
+
+
 
 
 .game-container>.game-indications {
@@ -205,22 +273,56 @@
 
 
 
+.eight-buttons .player-board button:nth-of-type(1) {
+    right: 124.75%;
+    transform: rotateY(-45deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: left;
+    z-index: 5;
+}
+.eight-buttons .player-board button:nth-of-type(2) {
+    right: 124.75%;
+    transform: rotateY(-29deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: left;
+    z-index: 4;
+}
 
+.eight-buttons .player-board button:nth-of-type(3) {
+    right: 124.75%;
+    transform: rotateY(-14deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: left;
+    z-index: 3;
+}
 
-/* 
-.player-board button:nth-of-type(5) {
-    background-color: orange;
-    left: calc(100% / var(--_number_of-buttons) * 4);
+.eight-buttons .player-board button:nth-of-type(4) {
+    right: 124.75%;
+    transform: rotateY(-0deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: left;
+    z-index: 1;
 }
-.player-board button:nth-of-type(6) {
-    background-color: pink;
-    left: calc(100% / var(--_number_of-buttons) * 5) ;
+.eight-buttons .player-board button:nth-of-type(5) {
+    left: 124.75%;
+    transform: rotateY(-0deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: right;
+    z-index: 1;
 }
-.player-board button:nth-of-type(7) {
-    background-color: maroon;
-    left: calc(100% / var(--_number_of-buttons) * 6) ;
+
+.eight-buttons .player-board button:nth-of-type(6) {
+    left: 124.75%;
+    transform: rotateY(14deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: right;
+    z-index: 3;
 }
-.player-board button:nth-of-type(8) {
-    background-color: violet;
-    left: calc(100% / var(--_number_of-buttons) * 7) ;
-} */
+.eight-buttons .player-board button:nth-of-type(7) {
+    left: 124.75%;
+    transform: rotateY(29deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: right;
+    z-index: 3;
+}
+
+.eight-buttons .player-board button:nth-of-type(8) {
+    left: 124.75%;
+    transform: rotateY(45deg) rotateX(300deg) skew(360deg) scale(7);
+    transform-origin: right;
+    z-index: 5;
+}
+

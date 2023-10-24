@@ -60,15 +60,14 @@ function restartGame(playersName: string[]) {
   if (!gameContainer) window.alert("Game container not found");
   gameContainer.innerHTML = "";
 
-  if (playersName) {
-    
+  if (playersName) { 
     const gameOptions: GameConstructor = {
       nbPlayers: playersName.length,
       playersName: playersName,
       gameContainer: gameContainer,
-    };
-
-
+      gameSpeed: 100,
+      numberOfButtons: 8
+    }
     retry.classList.add("hidden");
     const game = new GameManager(gameOptions);
   }
