@@ -8,6 +8,11 @@ const allInputCtrl = document.querySelector(
 const form = document.querySelector("form") as HTMLFormElement;
 const home = document.querySelector(".home") as HTMLDivElement;
 const game = document.querySelector(".game-container") as HTMLDivElement;
+const keyboardCtr = document.querySelector(
+  ".simple-keyboard"
+) as HTMLDivElement;
+import Keyboard from "simple-keyboard";
+import "simple-keyboard/build/css/index.css";
 
 const templateInput = (id: number): string => `
   <fieldset id="player${id}">
@@ -86,11 +91,23 @@ function setPlayer(add: boolean) {
   }
 }
 
+let gamertagId = "";
+
 function lessPlayer() {
   if (nbPlayer?.valueAsNumber && nbPlayer?.valueAsNumber > 1) {
     nbPlayer.valueAsNumber--;
     setPlayer(false);
   }
+  const inputGamertag = document.querySelectorAll(
+    ".gamertagInput"
+  ) as NodeListOf<HTMLInputElement>;
+  inputGamertag.forEach((element) => {
+    element.addEventListener("focus", (event) => {
+      gamertagId = event.target.id;
+
+      keyboardCtr.style.display = "block";
+    });
+  });
 }
 
 function morePlayer() {
@@ -98,6 +115,42 @@ function morePlayer() {
     nbPlayer.valueAsNumber++;
     setPlayer(true);
   }
+  const inputGamertag = document.querySelectorAll(
+    ".gamertagInput"
+  ) as NodeListOf<HTMLInputElement>;
+  inputGamertag.forEach((element) => {
+    element.addEventListener("focus", (event) => {
+      gamertagId = event.target.id;
+
+      keyboardCtr.style.display = "block";
+    });
+  });
+}
+
+const keyboard = new Keyboard({
+  theme: "hg-theme-default",
+  display: {
+    "{bksp}": "\u21e6 Retour",
+    "{enter}": "\u21b2 Rechercher",
+    "{space}": "	____",
+    "{lock}": "🔒",
+    "{shift}": "⇧",
+    "{tab}": "⇥",
+  },
+  onChange: (input) => onChange(input),
+  onKeyPress: (button) => onKeyPress(button),
+});
+
+function onChange(input: string) {
+  console.log(gamertagId);
+
+  (document.getElementById(gamertagId) as HTMLInputElement).value = input;
+  console.log("Input changed", input);
+}
+
+function onKeyPress(button: any) {
+  console.log("Button pressed", button);
+  if (button === "{enter}") keyboardCtr.style.display = "none";
 }
 
 export { lessPlayer, morePlayer, onSubmit, form };
