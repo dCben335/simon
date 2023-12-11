@@ -36,22 +36,22 @@ function showPartyRecap(players: Player[], multiplicator: number) {
           }
           </div>
           <div class="choiceDifficultyRadio">
-                <input type="radio" class="radioButton" name="radioButton_decouverte" value="easy" id="decouverte_retry" ${
+                <input type="radio" class="radioButton" name="radioButton" value="easy" id="decouverte_retry" ${
                   multiplicator === 1 ? "checked" : ""
                 } />
                 <label for="decouverte_retry">Découverte</label>
 
-                <input type="radio" class="radioButton" name="radioButton_normal" value="normal" id="normal_retry" ${
+                <input type="radio" class="radioButton" name="radioButton" value="normal" id="normal_retry" ${
                   multiplicator === 2 ? "checked" : ""
                 } />
                 <label for="normal_retry">Normal</label>
 
-                <input type="radio" class="radioButton" name="radioButton_difficile" value="difficult" id="difficile_retry" ${
+                <input type="radio" class="radioButton" name="radioButton" value="difficult" id="difficile_retry" ${
                   multiplicator === 3.5 ? "checked" : ""
                 } />
                 <label for="difficile_retry">Difficile</label>
 
-                <input type="radio" class="radioButton" name="radioButton_hardcore" value="hard" id="hardcore_retry" ${
+                <input type="radio" class="radioButton" name="radioButton" value="hard" id="hardcore_retry" ${
                   multiplicator === 20 ? "checked" : ""
                 } />
                 <label for="hardcore_retry">Hardcore</label>
