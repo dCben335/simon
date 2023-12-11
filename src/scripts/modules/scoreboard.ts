@@ -38,32 +38,3 @@ const templateScoreHead: string = `
       });
   }
 })();
-
-const scoreBoardExemple: PlayerBoardScore[] = [
-  {
-    gamertag: "Player 1",
-    score: 100,
-  },
-  {
-    gamertag: "Player 2",
-    score: 50,
-  },
-  {
-    gamertag: "Player 3",
-    score: 30,
-  },
-  {
-    gamertag: "Player 1",
-    score: 10,
-  },
-  {
-    gamertag: "Player 2",
-    score: 5,
-  },
-  {
-    gamertag: "Player 3",
-    score: 3,
-  },
-];
-
-// localStorage.setItem("scoreboard", JSON.stringify(scoreBoardExemple))

@@ -299,7 +299,7 @@ export default class GameManager {
 
 
   setActivePlayers(players: Player[]): number[] {
-    return (this.activePlayers = players.map((el, index) => index));
+    return this.activePlayers = players.map((_el, index: number) => index);
   }
 
   showWhoIsPlaying() {
@@ -345,7 +345,7 @@ export default class GameManager {
       </div>
     `;
 
-    this.players.forEach((element: Player, index: number) => {
+    this.players.forEach((_element: Player, index: number) => {
       this.gameContainer.innerHTML += `
           <div class="player player-${numberClasses[index + 1]}">
             ${this.players.length === 1 ? playerInfos : ""}
@@ -355,7 +355,7 @@ export default class GameManager {
                 </div>
                 <div class="player-buttons">
                     ${Object.keys(this.colorPossibilities).splice(0, this.numberOfButtons)
-                      .map( (color: string, index: number) =>
+                      .map( (color: string) =>
                           `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
                       ).join("")}
                 </div>

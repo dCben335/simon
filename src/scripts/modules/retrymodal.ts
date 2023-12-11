@@ -36,22 +36,25 @@ function showPartyRecap(players: Player[], multiplicator: number) {
           }
           </div>
           <div class="choiceDifficultyRadio">
-                <input type="radio" class="radioButton" name="radioButtonTest" value="easy" id="decouverte" ${
+                <input type="radio" class="radioButton" name="radioButton_decouverte" value="easy" id="decouverte_retry" ${
                   multiplicator === 1 ? "checked" : ""
                 } />
-                <label for="decouverte">Découverte</label>
-                <input type="radio" class="radioButton" name="radioButtonTest" value="normal" id="normal" ${
+                <label for="decouverte_retry">Découverte</label>
+
+                <input type="radio" class="radioButton" name="radioButton_normal" value="normal" id="normal_retry" ${
                   multiplicator === 2 ? "checked" : ""
                 } />
-                <label for="normal">Normal</label>
-                <input type="radio" class="radioButton" name="radioButtonTest" value="difficult" id="difficile" ${
+                <label for="normal_retry">Normal</label>
+
+                <input type="radio" class="radioButton" name="radioButton_difficile" value="difficult" id="difficile_retry" ${
                   multiplicator === 3.5 ? "checked" : ""
                 } />
-                <label for="difficile">Difficile</label>
-                <input type="radio" class="radioButton" name="radioButtonTest" value="hard" id="hardcore" ${
+                <label for="difficile_retry">Difficile</label>
+
+                <input type="radio" class="radioButton" name="radioButton_hardcore" value="hard" id="hardcore_retry" ${
                   multiplicator === 20 ? "checked" : ""
                 } />
-                <label for="hardcore">Hardcore</label>
+                <label for="hardcore_retry">Hardcore</label>
             </div>
           <div class="retryButtons" >
             <button class="returnToMenu">Menu</button>

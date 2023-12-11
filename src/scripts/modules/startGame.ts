@@ -59,7 +59,7 @@ function startGame(playersName: string[], chosenMode: GameDifficulty) {
       multiplicator: tabMultiplicator[chosenMode],
     };
 
-    const game = new GameManager(gameOptions);
+    new GameManager(gameOptions);
   }
 }
 
