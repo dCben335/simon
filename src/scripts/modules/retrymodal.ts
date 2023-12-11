@@ -77,16 +77,17 @@ function showPartyRecap(players: Player[], multiplicator: number) {
   );
 
   retryButton?.addEventListener("pointerdown", () => {
-    let chosenMode = Array.from(retry.querySelectorAll('input[type="radio"]'))
+    const chosenMode = Array.from(retry.querySelectorAll('input[type="radio"]'))
       .filter((element) => (element as HTMLInputElement)?.checked)
       .map((element) => (element as HTMLInputElement).value)
       .toString();
 
     const playersName = players.map(({ gamertag }: any) => gamertag);
     startGame(playersName, chosenMode);
-
     retry.classList.add("hidden");
   });
 }
 
-export { showPartyRecap };
+export { 
+  showPartyRecap,
+};

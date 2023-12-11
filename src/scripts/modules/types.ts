@@ -11,6 +11,7 @@ type GameConstructor = {
   multiplicator: number;
   patternsLevel: { [key: number]: number };
   gameContainer: HTMLDivElement;
+  numberOfButtons: number
 };
 
 type Player = {

@@ -28,6 +28,10 @@
    --green: #00ff00;
    --blue: #0000ff;
    --yellow: #ffff00;
+   --purple: purple;
+   --orange: orange;
+   --brown: brown;
+   --cyan: cyan;
    --linear: linear-gradient(5deg, #0000ff, #00ff00, #ffff00, #ff0000);
    --linear2: linear-gradient(45deg, #0000ff, #00ff00, #ffff00, #ff0000);
 }
