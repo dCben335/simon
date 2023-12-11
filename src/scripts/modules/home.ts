@@ -1,4 +1,6 @@
 import { SubmitReturn } from "./types";
+import Keyboard from "simple-keyboard";
+import "simple-keyboard/build/css/index.css";
 
 const nbPlayer = document.querySelector(".nbPlayerText") as HTMLInputElement;
 const allInputCtrl = document.querySelector(
@@ -8,6 +10,10 @@ const allInputCtrl = document.querySelector(
 const form = document.querySelector("form") as HTMLFormElement;
 const home = document.querySelector(".home") as HTMLDivElement;
 const game = document.querySelector("#game-container") as HTMLDivElement;
+
+let inputGamertag = document.querySelectorAll(".gamertagInput") as NodeListOf<HTMLInputElement>
+const keyboardCtr = document.querySelector(".simple-keyboard") as HTMLDivElement;
+
 
 const templateInput = (id: number): string => `
   <fieldset id="player${id}">
@@ -85,7 +91,16 @@ function setPlayer(add: boolean) {
       allInputCtrl.innerHTML += templateInput(i);
     }
   }
+
+  inputGamertag = document.querySelectorAll(
+    ".gamertagInput"
+  ) as NodeListOf<HTMLInputElement>;
+  inputGamertag.forEach((input) => {
+    input.addEventListener("focus", onInputFocus);
+  });
 }
+
+let gamertagId: string;
 
 function lessPlayer() {
   if (nbPlayer?.valueAsNumber && nbPlayer?.valueAsNumber > 1) {
@@ -99,6 +114,42 @@ function morePlayer() {
     nbPlayer.valueAsNumber++;
     setPlayer(true);
   }
+}
+
+const keyboard = new Keyboard({
+  theme: "hg-theme-default",
+  display: {
+    "{bksp}": "\u21e6 Retour",
+    "{enter}": "\u21b2 Rechercher",
+    "{space}": "	____",
+    "{lock}": "🔒",
+    "{shift}": "⇧",
+    "{tab}": "⇥",
+  },
+  onChange: (input) => onChange(input),
+  onKeyPress: (button) => onKeyPress(button),
+});
+
+inputGamertag.forEach((input) => {
+  input.addEventListener("focus", onInputFocus);
+});
+
+function onInputFocus(event: FocusEvent): void {
+  keyboardCtr.style.display = "block";
+  const gamertagInput = event.target as HTMLInputElement;
+  gamertagId = gamertagInput.id;
+
+  keyboard.setOptions({
+    inputName: gamertagInput.id,
+  });
+}
+
+function onChange(input: string) {
+  (document.getElementById(gamertagId) as HTMLInputElement).value = input;
+}
+
+function onKeyPress(button: any) {
+  if (button === "{enter}") keyboardCtr.style.display = "none";
 }
 
 export { lessPlayer, morePlayer, onSubmit, form };
