@@ -74,12 +74,12 @@ form fieldset>input[type="text"] {
     position: relative;
 }
 
-.nbplayerbutton>input[type="number"] {
+.nbplayerbutton > input[type="number"] {
     position: absolute;
     text-align: center;
     font-size: 20px;
-    bottom: 0px;
-    left: 60%;
+    bottom: 5px;
+    left: 55%;
     transform: translateX(-50%);
 }
 
