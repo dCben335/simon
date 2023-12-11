@@ -120,7 +120,7 @@ const keyboard = new Keyboard({
   theme: "hg-theme-default",
   display: {
     "{bksp}": "\u21e6 Retour",
-    "{enter}": "\u21b2 Rechercher",
+    "{enter}": "\u21b2 Ajouter le joueur",
     "{space}": "	____",
     "{lock}": "🔒",
     "{shift}": "⇧",

@@ -129,57 +129,57 @@ form fieldset>input[type="text"] {
 .radioButton {
     position: absolute;
     display: none;
-
-    &+label {
-        float: left;
-        padding: .5em 1em;
-        cursor: pointer;
-        border: 2px solid;
-        border-width: 1px;
-        border-left: 0;
-        border-right: 0;
-        border-top: 0;
-        margin-right: -1px;
-        color: #fff;
-        font-weight: bold;
-        user-select: none;
-    }
-
-    &+label:first-of-type {
-        border-color: var(--green);
-        border-radius: 10px 0 0 10px;
-    }
-
-    &+label:nth-of-type(2) {
-        border-color: var(--blue);
-    }
-
-    &+label:nth-of-type(3) {
-        border-color: var(--yellow);
-    }
-
-    &+label:nth-of-type(4) {
-        border-color: var(--red);
-        border-radius: 0 10px 10px 0;
-    }
-
-    &:checked+label:first-of-type {
-        background: var(--green);
-    }
-
-    &:checked+label:nth-of-type(2) {
-        background: var(--blue);
-    }
-
-    &:checked+label:nth-of-type(3) {
-        background: var(--yellow);
-        color: #000;
-    }
-
-    &:checked+label:nth-of-type(4) {
-        background: var(--red);
-    }
 }
+.radioButton + label {
+    float: left;
+    padding: .5em 1em;
+    cursor: pointer;
+    border: 2px solid;
+    border-width: 1px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    margin-right: -1px;
+    color: #fff;
+    font-weight: bold;
+    user-select: none;
+}
+
+.radioButton + label:first-of-type {
+    border-color: var(--green);
+    border-radius: 10px 0 0 10px;
+}
+
+.radioButton + label:nth-of-type(2) {
+    border-color: var(--blue);
+}
+
+.radioButton + label:nth-of-type(3) {
+    border-color: var(--yellow);
+}
+
+.radioButton + label:nth-of-type(4) {
+    border-color: var(--red);
+    border-radius: 0 10px 10px 0;
+}
+
+.radioButton:checked + label:first-of-type {
+    background: var(--green);
+}
+
+.radioButton:checked + label:nth-of-type(2) {
+    background: var(--blue);
+}
+
+.radioButton:checked + label:nth-of-type(3) {
+    background: var(--yellow);
+    color: #000;
+}
+
+.radioButton:checked + label:nth-of-type(4) {
+    background: var(--red);
+}
+
 
 .simple-keyboard {
     color: #fff;
