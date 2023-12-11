@@ -34,8 +34,8 @@ function showPartyRecap(players: Player[], multiplicator: number) {
                   `).join("")
               : "<p>Aucun joueur</p>"
           }
-        </div>
-        <div class="choiceDifficultyRadio">
+          </div>
+          <div class="choiceDifficultyRadio">
                 <input type="radio" class="radioButton" name="radioButtonTest" value="easy" id="decouverte" ${
                   multiplicator === 1 ? "checked" : ""
                 } />
@@ -52,11 +52,11 @@ function showPartyRecap(players: Player[], multiplicator: number) {
                   multiplicator === 20 ? "checked" : ""
                 } />
                 <label for="hardcore">Hardcore</label>
-              </div>
-        <div class="retryButtons" >
-          <button class="returnToMenu" >Menu</button>
-          <button class="retryButton" >Réessayer</button>
-        </div>
+            </div>
+          <div class="retryButtons" >
+            <button class="returnToMenu">Menu</button>
+            <button class="retryButton">Réessayer</button>
+          </div>
         </div>
       </div>
     </aside>

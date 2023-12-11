@@ -357,8 +357,7 @@ export default class GameManager {
                     ${Object.keys(this.colorPossibilities).splice(0, this.numberOfButtons)
                       .map( (color: string, index: number) =>
                           `<button data-color="${color}" style="--_button-color: var(--${color})"></button>`
-                      )
-                      .join("")}
+                      ).join("")}
                 </div>
             </section>       
           </div> 
