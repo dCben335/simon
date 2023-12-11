@@ -8,6 +8,9 @@ const allInputCtrl = document.querySelector(
 const form = document.querySelector("form") as HTMLFormElement;
 const home = document.querySelector(".home") as HTMLDivElement;
 const game = document.querySelector(".game-container") as HTMLDivElement;
+let inputGamertag = document.querySelectorAll(
+  ".gamertagInput"
+) as NodeListOf<HTMLInputElement>;
 const keyboardCtr = document.querySelector(
   ".simple-keyboard"
 ) as HTMLDivElement;
@@ -89,25 +92,22 @@ function setPlayer(add: boolean) {
       allInputCtrl.innerHTML += templateInput(i);
     }
   }
+
+  inputGamertag = document.querySelectorAll(
+    ".gamertagInput"
+  ) as NodeListOf<HTMLInputElement>;
+  inputGamertag.forEach((input) => {
+    input.addEventListener("focus", onInputFocus);
+  });
 }
 
-let gamertagId = "";
+let gamertagId: string;
 
 function lessPlayer() {
   if (nbPlayer?.valueAsNumber && nbPlayer?.valueAsNumber > 1) {
     nbPlayer.valueAsNumber--;
     setPlayer(false);
   }
-  const inputGamertag = document.querySelectorAll(
-    ".gamertagInput"
-  ) as NodeListOf<HTMLInputElement>;
-  inputGamertag.forEach((element) => {
-    element.addEventListener("focus", (event) => {
-      gamertagId = event.target.id;
-
-      keyboardCtr.style.display = "block";
-    });
-  });
 }
 
 function morePlayer() {
@@ -115,16 +115,6 @@ function morePlayer() {
     nbPlayer.valueAsNumber++;
     setPlayer(true);
   }
-  const inputGamertag = document.querySelectorAll(
-    ".gamertagInput"
-  ) as NodeListOf<HTMLInputElement>;
-  inputGamertag.forEach((element) => {
-    element.addEventListener("focus", (event) => {
-      gamertagId = event.target.id;
-
-      keyboardCtr.style.display = "block";
-    });
-  });
 }
 
 const keyboard = new Keyboard({
@@ -141,15 +131,25 @@ const keyboard = new Keyboard({
   onKeyPress: (button) => onKeyPress(button),
 });
 
-function onChange(input: string) {
-  console.log(gamertagId);
+inputGamertag.forEach((input) => {
+  input.addEventListener("focus", onInputFocus);
+});
 
+function onInputFocus(event: FocusEvent): void {
+  keyboardCtr.style.display = "block";
+  const gamertagInput = event.target as HTMLInputElement;
+  gamertagId = gamertagInput.id;
+
+  keyboard.setOptions({
+    inputName: gamertagInput.id,
+  });
+}
+
+function onChange(input: string) {
   (document.getElementById(gamertagId) as HTMLInputElement).value = input;
-  console.log("Input changed", input);
 }
 
 function onKeyPress(button: any) {
-  console.log("Button pressed", button);
   if (button === "{enter}") keyboardCtr.style.display = "none";
 }
 
