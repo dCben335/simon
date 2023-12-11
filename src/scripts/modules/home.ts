@@ -7,7 +7,7 @@ const allInputCtrl = document.querySelector(
 
 const form = document.querySelector("form") as HTMLFormElement;
 const home = document.querySelector(".home") as HTMLDivElement;
-const game = document.querySelector(".game-container") as HTMLDivElement;
+const game = document.querySelector("#game-container") as HTMLDivElement;
 
 const templateInput = (id: number): string => `
   <fieldset id="player${id}">
@@ -47,6 +47,7 @@ function onSubmit(event: SubmitEvent): SubmitReturn {
     players: players.length === nbPlayer.valueAsNumber ? players : [],
     chosenMode: chosenMode,
   } as SubmitReturn;
+  
   return submit as any;
 }
 

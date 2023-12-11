@@ -9,7 +9,9 @@ type GameConstructor = {
   gameSpeed: number;
   minSpeed: number;
   multiplicator: number;
-  patternsLevel: { [key: number]: number };
+  patternsLevel: { 
+    [key: number]: number 
+  };
   gameContainer: HTMLDivElement;
   numberOfButtons: number
 };
@@ -20,9 +22,17 @@ type Player = {
   round: number;
 };
 
+type GameDifficulty = "easy" | "normal" | "difficult" | "hard";
+
 type SubmitReturn = {
   players: string[];
-  chosenMode: string;
-};
+  chosenMode: GameDifficulty;
+}
 
-export type { PlayerBoardScore, GameConstructor, Player, SubmitReturn };
+export type { 
+  PlayerBoardScore, 
+  GameConstructor, 
+  Player, 
+  SubmitReturn,
+  GameDifficulty,
+};

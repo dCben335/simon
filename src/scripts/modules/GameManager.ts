@@ -318,6 +318,7 @@ export default class GameManager {
   }
 
   generateHTML(): void {
+    this.gameContainer.innerHTML = "";
     this.gameContainer.classList.add(`${numberClasses[this.players.length]}-players`);
     this.gameContainer.classList.add(`${numberClasses[this.numberOfButtons]}-buttons`);
     this.gameContainer.style.setProperty('--_number-of-buttons', `${this.numberOfButtons}`); 

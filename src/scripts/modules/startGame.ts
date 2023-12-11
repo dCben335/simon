@@ -1,5 +1,6 @@
 import { GameConstructor } from "./types";
 import GameManager from "./GameManager";
+import { GameDifficulty } from "./types";
 
 const tabSpeed: { [key: string]: number } = {
   easy: 950,
@@ -29,19 +30,29 @@ const patternToCreate: { [key: string]: { [key: number]: number } } = {
   hard: { 0: 2, 5: 3, 10: 4, 20: 5 },
 };
 
-const gameContainer = document.querySelector(
-  ".game-container"
-) as HTMLDivElement;
+const tabNbButtons: { [key: string]: number } = {
+  easy: 2,
+  normal: 4,
+  difficult: 6,
+  hard: 8,
+}
 
-function startGame(playersName: string[], chosenMode: string) {
+const gameContainer = document.querySelector("#game-container") as HTMLDivElement;
+
+function startGame(playersName: string[], chosenMode: GameDifficulty) {
   if (!gameContainer) window.alert("Game container not found");
+  if (!playersName) window.alert("No players name");
+  if (!chosenMode) window.alert("No chosen mode");
+  
   gameContainer.innerHTML = "";
+  gameContainer.className = "";
 
   if (playersName) {
     const gameOptions: GameConstructor = {
       nbPlayers: playersName.length,
       playersName: playersName,
       gameContainer: gameContainer,
+      numberOfButtons: tabNbButtons[chosenMode],
       gameSpeed: tabSpeed[chosenMode],
       minSpeed: tabSpeedMin[chosenMode],
       patternsLevel: patternToCreate[chosenMode],

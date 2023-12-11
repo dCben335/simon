@@ -1,21 +1,21 @@
-.game-container {
+#game-container {
     height: 100vh;
     position: relative;
 }
-.game-container.one-players > .player {
+#game-container.one-players > .player {
     height: 100%;
     width: 100%;
 }
-.game-container.two-players  > .player {
+#game-container.two-players  > .player {
     height: 75%;
     width: 100%;
 }
-.game-container:is(.two-players, .three-players, .four-players)  > .player {
+#game-container:is(.two-players, .three-players, .four-players)  > .player {
     height: 60%;
     width: 100%;
 }
 
-.game-container > .game-indications {
+#game-container > .game-indications {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -116,7 +116,7 @@
     transform: translate(-50%, 55%);
     left: 50%;
 }
-.game-container:not(.one-players) .player::after {
+#game-container:not(.one-players) .player::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -133,7 +133,7 @@
     transition: all .35s ease-in-out;
 }
 
-.game-container.two {
+#game-container.two {
     
 }
 
@@ -175,7 +175,7 @@
 }   
 
 .playing .player-board button:hover,
-.game-container:not(.one-players) .playing::after,
+#game-container:not(.one-players) .playing::after,
 .player-board button.activeColor {
     filter: brightness(1);
     opacity: 1;
@@ -266,7 +266,7 @@
 
 
 
-.game-container>.game-indications {
+#game-container>.game-indications {
     position: fixed;
     top: 50%;
     left: 50%;

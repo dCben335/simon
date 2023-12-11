@@ -1,5 +1,5 @@
 import { startGame } from "./startGame";
-import { Player } from "./types";
+import { Player, GameDifficulty } from "./types";
 
 const retry = document.querySelector(".retry") as HTMLDivElement;
 
@@ -24,17 +24,14 @@ function showPartyRecap(players: Player[], multiplicator: number) {
             Array.isArray(players)
               ? players
                   .sort((a, b) => b.score - a.score)
-                  .map(
-                    ({ gamertag, score, round }: any, index) => `
-              <div class="scoreboardRow" >
-                <span class="rank">#${index + 1}</span>
-                <span class="gamertag">${gamertag}</span>
-                <span class="score">${score}</span>
-                <span class="round">${round}</span>
-              </div> 
-          `
-                  )
-                  .join("")
+                  .map(({ gamertag, score, round }: any, index) => `
+                      <div class="scoreboardRow" >
+                        <span class="rank">#${index + 1}</span>
+                        <span class="gamertag">${gamertag}</span>
+                        <span class="score">${score}</span>
+                        <span class="round">${round}</span>
+                      </div> 
+                  `).join("")
               : "<p>Aucun joueur</p>"
           }
         </div>
@@ -65,12 +62,8 @@ function showPartyRecap(players: Player[], multiplicator: number) {
     </aside>
   `;
 
-  const returnToMenuButton = document.querySelector(
-    ".returnToMenu"
-  ) as HTMLButtonElement;
-  const retryButton = document.querySelector(
-    ".retryButton"
-  ) as HTMLButtonElement;
+  const returnToMenuButton = document.querySelector(".returnToMenu") as HTMLButtonElement;
+  const retryButton = document.querySelector(".retryButton") as HTMLButtonElement;
 
   returnToMenuButton?.addEventListener("pointerdown", () =>
     window.location.reload()
@@ -80,7 +73,7 @@ function showPartyRecap(players: Player[], multiplicator: number) {
     const chosenMode = Array.from(retry.querySelectorAll('input[type="radio"]'))
       .filter((element) => (element as HTMLInputElement)?.checked)
       .map((element) => (element as HTMLInputElement).value)
-      .toString();
+      .toString() as GameDifficulty;
 
     const playersName = players.map(({ gamertag }: any) => gamertag);
     startGame(playersName, chosenMode);
