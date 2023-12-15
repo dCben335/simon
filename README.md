@@ -1,6 +1,6 @@
 # Jeu du MonSi (simon)
 
-![home](.public/assets/images/home.png)
+![home](./public/assets/images/home.png)
 
 Le but de ce projet est de développer un jeu du simon exclusivement coté front-end.
 Pour ce faire, nous allons utiliser vanillaJS avec la librairie Tone.js
