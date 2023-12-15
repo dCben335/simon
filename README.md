@@ -22,13 +22,6 @@ Codage d'un simple simon avec :
        - Difficile (6 touches, rapidité qui augment en fonction des tours, 2 couleurs ajoutées à chaque round)
        - Hardcore (8 touches, rapidité qui augment en fonction des tours, 3 couleurs ajoutées à chaque round, nombre de couleurs ajouté par tours qui augmente)
     1. + de couleur
-    2. des vrais musiques
-
-## A régler
-
-[x] PointerEvent
-[] Keyboard Virtual
-[] Responsive HOME
 
 ## Annexes
 
